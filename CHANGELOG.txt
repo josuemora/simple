@@ -1,0 +1,2 @@
+2018-06-10 	Liberación de la version 1
+			Con dos plantillas definidas /core/plantilla1.php /core/plantilla_listado1.php

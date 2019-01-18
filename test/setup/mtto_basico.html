@@ -1,0 +1,54 @@
+<div id="cb_mttobasico" style="width:100%;" class="tab_mttobasico">  
+<form name="fb_mttobasico" id="fb_mttobasico" onsubmit="return false;" method="post" style="width:100%; margin-top:10px;">
+<table cellpadding="5" cellspacing="0" border="0" class="ui-widget ui-widget-content">
+<thead>
+	<tr class="ui-widget-header "><th>Filtros</th></tr>
+</thead>
+<tr>
+___filtros_titulos___
+</tr>
+<tr>
+___filtros_campos___
+    <td rowspan="2"><button onclick="buscar_inicio('mttobasico')">Buscar</button></td>
+</tr>
+</table>       
+<input type="hidden" name="modulo" value="mttobasico"/>
+<input type="hidden" name="limite" value="___limite___" id="mttobasico_limite"/>
+<input type="hidden" name="pagina" value="0"  id="mttobasico_pagina"/>
+</form>
+<div id="rb_mttobasico" style="width:100%; margin-top:30px;">
+	<table id="table-mttobasico" cellpadding="4" cellspacing="4" border="0"  class="ui-widget ui-widget-content">
+		<thead><tr class="ui-widget-header ">___regtitulos___<td>&nbsp;</td><td>&nbsp;</td></tr></thead>
+		<tbody></tbody>
+	</table>
+	<div class="botones"><button class="seguridad seg_mttobasico-agregar" onclick="agregar_mttobasico()">Agregar mttobasico</button><button onclick="buscar_plus('mttobasico','anterior')"> &lt;&lt; </button><button onclick="buscar_plus('mttobasico','siguiente')"> &gt;&gt;</button></div>
+</div><!--termina rb-->          
+
+
+
+<table id="table-default-mttobasico" style="visibility:hidden">
+    <tr>___regdefault___<td><button class="seguridad seg_mttobasico-cambiar" onclick="cambiar_eliminar_mttobasico('##id_mttobasico##','cambiar')">Cambiar</button></td><td><button  class="seguridad seg_mttobasico-eliminar" onclick="cambiar_eliminar_mttobasico('##id_mttobasico##','eliminar')">Eliminar</button></td></tr>
+</table>
+
+
+
+<div id="dlg_mttobasico" title="mttobasico">
+<form id="fdlg_mttobasico" name="fdlg_mttobasico" method="post" onsubmit="return false;">
+<table cellpadding="5" cellspacing="5">
+<tr id="row_id_mttobasico" style="visibility:visible">
+	<td>id_mttobasico</td>
+    <td><input id="dlg_id_mttobasico" name="id_mttobasico" value="" style="width:60px;" readonly /></td>
+</tr>
+
+___formcampos___
+<tr>
+	<td colspan="2"><div id="dlg_mensaje_mttobasico"></div></td>
+</tr>
+</table>
+<input type="hidden" id="dlg_accion_mttobasico" name="accion" value="" />
+    <td><input type="hidden" id="dlg_botones_mttobasico" name="botones" value="" style="width:400px;" readonly/></td>
+</form>
+</div><!--termina dlg-->    
+
+
+</div><!--termina cb-->

@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# 2017-12-12 :v4
+# Explicitly cached 'master entries'.
+CACHE:
+jquery-ui-1.10.3.custom/
+
+
+
+
+# Resources that require the user to be online.
+NETWORK:
+*
+
+FALLBACK:

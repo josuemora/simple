@@ -1,0 +1,54 @@
+
+
+.tablaDir table {
+  width: 100%;
+}
+.tablaDir thead,.tablaDir tfoot {
+  display: table; /* to take the same width as tr */
+  width: calc(100% - 18px); /* - 18px because of the scrollbar width */
+}
+.tablaDir tbody {
+  display: block; /* to enable vertical scrolling */
+  max-height: 300px; /* e.g. */
+  min-height: 300px; /* e.g. */
+  overflow-y: scroll; /* keeps the scrollbar even if it doesn't need it; display purpose */
+  overflow-x:hidden;
+}
+
+.tablaDir tr {
+  display: table; /* display purpose; th's border */
+  width: 100%;
+  /*background-color: #fff;*/
+}
+/*
+.tablaDir tr:hover {
+          background-color: #ffff99;
+        }
+*/
+
+.completaprodCol1{
+	/*float: left;*/
+	display: inline-block;
+	width: 70px;
+	min-width: 70px;
+	text-align: left;
+	/*color: blue;*/
+}
+
+.completaprodCol2{
+	/*float: left;*/
+	display: inline-block;
+	width: 320px;
+	min-width: 320px;
+	text-align: left;
+	/*color: red;*/
+}
+
+.completaprodCol3{
+	/*float: left;*/
+	display: inline-block;
+	width: 200px;
+	min-width: 200px;
+	text-align: right;
+	/*color: green;*/
+}

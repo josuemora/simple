@@ -1,0 +1,20 @@
+ok refactorizar codigo en funciones monoliticas 
+ok poner configuracion del tab del boton eliminar
+OK crear la navegacion de la aplicacion interfaz
+OK crear la estructura final de los directorios y los archivos
+ok (se deja con jquery) crear login con bootstrap
+OK crear la app de seguridad
+OK refactorizar botones de los dialogos agregar,eliminar,cambiar
+OK pruebas de abc de un documento maestro detalle
+
+OK Validacion de datos numericos y moneda
+OK Datos de Fecha y Hora
+OK foco al regreso de una lista
+ok totales en subplantilla
+OK ubicacion y logo de botones de Agregar,Cambiar, Eliminar y Seleccionar
+Estructura de configuracion de coneccion a las BD por Modulos,
+
+Guardado temporal en Cache.
+Ajustes pie tabla del objeto Table (totales)
+
+
