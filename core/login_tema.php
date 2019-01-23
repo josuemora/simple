@@ -8,9 +8,9 @@ $id_usuario	= trim($_POST["session_id_usuario"]);
 $tema		= trim($_POST["tema"]);
 $token = isset($_POST["token"]) ? trim($_POST["token"]) : '';
 if($token != ''){
-	//session_start();
+	session_start();
 	$_SESSION["accesos"][$token]["tema_usuarios"] = $tema;
-	//session_write_close();//close flush session
+	session_write_close();//close flush session
 	$qry = sprintf("update simple_seguridad.usuarios set tema='%s' where id=%s",$tema,$id_usuario);
 	$qryBloqueo = "select * from simple_seguridad.usuarios where id=$id_usuario for update";	
 	include("ABC_query_xml_pdo.php");
