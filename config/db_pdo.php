@@ -15,11 +15,27 @@ endif;
 $_POST = array_map('filterXSS',$_POST);
 */
 
+
+//Base de datos Global
 	$dbserver 	= "localhost";
 	$database 	= "simple_test";
 	$user 		= "simple";
 	$pswd 		= "12345";	
-	
+
+
+	//base de datos individual por modulos...
+	//es importante que exista una variable "$modulo" en los archivos de consultas/ABC_*.php y en lee_modulo.php
+	// o en todo archivo que incluya este archivo "db_pdo.php"
+if(isset($modulo)){
+
+	//ejemplo modulo 
+	if($modulo == 'ventas2'){
+		$dbserver 	= "localhost";
+		$database 	= "simple_test";
+		$user 		= "simple";
+		$pswd 		= "12345";	
+	}
+}	
 	
 
 try {
