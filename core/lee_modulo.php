@@ -14,6 +14,7 @@ $offset = $pagina * $limite;// - $limite;
 $where = '';
 $orderby = '';
 $aordenby = array();
+
 if(isset($_POST['filtro_oplogico'])){
 	foreach($_POST['filtro_oplogico'] as $key=>$val){
 		$cadw = $key==0 ? '' : " $val ";
@@ -39,6 +40,7 @@ include("../config/db_pdo.php");
 include("../consultas/QuerysPorModulo.php");
 
 $qry = sprintf($aModqry[$modulo]." %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+$qryCount = sprintf("select count(*) as rowsCount from (".$aModqry[$modulo]." %s ) as CuentaRen",$where);
 
 /*
 if($modulo=="alumnos"){
@@ -73,8 +75,11 @@ if($modulo=="usuarios"){
 */
 
 if($recordset = $vinculo->query($qry)){
+	$rowid = $offset;
 	while ($row = $recordset->fetch(PDO::FETCH_ASSOC)  ) {
 		$cadxml .= "<$modulo>";
+		$rowid = $rowid + 1;
+		$cadxml .= "<rowid><![CDATA[$rowid]]></rowid>";
 		foreach($row as $key=>$val){
 			$cadxml .= "<$key><![CDATA[$val]]></$key>";
 		};
@@ -82,6 +87,17 @@ if($recordset = $vinculo->query($qry)){
 	}
 	$recordset->closeCursor();
 }
+
+
+if($recordset = $vinculo->query($qryCount)){
+	while ($row = $recordset->fetch(PDO::FETCH_ASSOC)  ) {
+		foreach($row as $key=>$val){
+			$cadxml .= "<$key><![CDATA[$val]]></$key>";
+		};
+	}
+	$recordset->closeCursor();
+}
+
 
 if(isset($aModTotqry[$modulo])){
 	$qry2 = sprintf($aModTotqry[$modulo]." %s",$where);
@@ -105,7 +121,7 @@ $vinculo = null;
 
 //sleep(1);
 
-$cadxml = '<?xml version="1.0" encoding="utf-8"?><root>'.$cadxml.'<qry><![CDATA['.$qry.']]></qry><qry><![CDATA['.$qry2.']]></qry></root>';
+$cadxml = '<?xml version="1.0" encoding="utf-8"?><root>'.$cadxml.'<qry><![CDATA['.$qry.']]></qry><qry2><![CDATA['.$qry2.']]></qry2><qry3><![CDATA['.$qryCount.']]></qry3></root>';
 ob_end_clean();
 header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
 header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . ' GMT' );

@@ -20,8 +20,16 @@ include("../config/db_pdo.php");
 $cadxml = '';
 $qryBloqueo = '';
 
+
 if($accion=="agregar"){
-	$qry = "insert into alumnos (nombre,paterno,materno,grupos_id,sexo,usalentes,enfermedad,capacidaddiferente) values ('$nombre','$paterno','$materno',$grupos_id,'$sexo','$usalentes','$enfermedad','$capacidaddiferente')";
+	$when = microtime(true);
+	//$micro = sprintf("%06d", ($when - floor($when)) * 1000000);
+	//$when = new \DateTime(date('Y-m-d H:i:s.'. $micro, (int) $when));
+
+	//$numero = substr($when->format('YmdHisu'),0,20);	
+	//$base62 = convBase($numero, '0123456789', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+	
+	$qry = "insert into alumnos (id,nombre,paterno,materno,grupos_id,sexo,usalentes,enfermedad,capacidaddiferente) values ($when,'$nombre','$paterno','$materno',$grupos_id,'$sexo','$usalentes','$enfermedad','$capacidaddiferente')";
 }
 if($accion=="consultar"){
 	$qry = "select id as valor, concat(grado,' ',salon,' ',turno) as texto  from grupos order by id desc";
@@ -41,16 +49,16 @@ if($accion=="consultar"){
 	}	
 	$cadxml .= "</select_grupo>";
 	
-	$qry = "select * from alumnos where id=$id_alumnos limit 1";
+	$qry = "select * from alumnos where id='$id_alumnos' limit 1";
 }
 if($accion=="cambiar"){
-	$qryBloqueo = "select * from alumnos where id=$id_alumnos for update";
+	$qryBloqueo = "select * from alumnos where id='$id_alumnos' for update";
 	$qry = "update alumnos set nombre='$nombre',paterno='$paterno',materno='$materno',grupos_id=$grupos_id,sexo='$sexo',usalentes='$usalentes',enfermedad='$enfermedad',capacidaddiferente='$capacidaddiferente'";
-	$qry = $qry." where id=$id_alumnos";
+	$qry = $qry." where id='$id_alumnos'";
 }
 if($accion=="eliminar"){
-	$qryBloqueo = "select * from alumnos where id=$id_alumnos for update";
-	$qry = "delete from alumnos where id=$id_alumnos";
+	$qryBloqueo = "select * from alumnos where id='$id_alumnos' for update";
+	$qry = "delete from alumnos where id='$id_alumnos'";
 }
 
 include("../core/ABC_query_xml_pdo.php");

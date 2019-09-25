@@ -330,7 +330,77 @@ foreach($config_apps['libs_js_url'] as $url){
 	echo '<script type="text/javascript" src="'.$url.'?v='.$version.'" ></script>'."\n";
 };
 
+	
+/*	
+function toBase($num, $b=62) {
+  $base='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $r = $num  % $b ;
+  $res = $base[$r];
+  $q = floor($num/$b);
+  while ($q) {
+    $r = $q % $b;
+    $q =floor($q/$b);
+    $res = $base[$r].$res;
+  }
+  return $res;
+}
 
+function to10( $num, $b=62) {
+  $base='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $limit = strlen($num);
+  $res=strpos($base,$num[0]);
+  for($i=1;$i<$limit;$i++) {
+    $res = $b * $res + strpos($base,$num[$i]);
+  }
+  return $res;
+}	
+*/
+/*
+//1560972732.924279 
+//20190619143212924278
+ini_set("precision", 16);
+$when = microtime(true);
+$micro = sprintf("%06d", ($when - floor($when)) * 1000000);
+echo "$when $micro<br>";
+$when = new \DateTime(date('Y-m-d H:i:s.'. $micro, (int) $when));
+var_dump($when, $when->format('YmdHis.u'));
+	echo "<br><br><br><br>";
+
+	$numero = substr($when->format('YmdHisu'),0,20);
+
+	$numid = alphaID($numero);
+	$regid = alphaID($numid,true);
+	echo sprintf("%x",(float)$numero);
+	//var_dump((int)$regid);
+	$comprueba = alphaID($regid);
+	if($numid == $comprueba){
+	echo "OK $numero $numid $regid $comprueba <br>";
+	echo substr(sprintf("%f",$regid),0,8).' '.substr(sprintf("%f",$regid),8,6).' '.substr(sprintf("%f",$regid),14,6);
+	echo "<br>";
+	$fechahora = ($regid/10);
+	//var_dump($fechahora);
+	$micosegundos = ($regid/100000000000000) - intval(($regid/100000000000000));
+	var_dump($micosegundos);
+	echo "$fechahora $micosegundos <br>".sprintf("%x",$regid);
+	echo "<br><br>";
+	//echo gmp_strval((string)$regid);
+echo "<br><br><br>";	
+	$base62 = convBase($numero, '0123456789', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+	$decimal = convBase($base62, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', '0123456789');
+	$comprueba = convBase($decimal, '0123456789', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+	echo "$numero $base62 $decimal $comprueba";
+echo "<br><br><br>";	
+	
+	$base16 = convBase($numero, '0123456789', '0123456789ABCDEF');
+	$decimal = convBase($base16, '0123456789ABCDEF', '0123456789');
+	$comprueba = convBase($decimal, '0123456789', '0123456789ABCDEF');
+	echo "$numero $base16 $decimal $comprueba ".sprintf("%X",$regid)." ".base_convert($numero,10,16);
+echo "<br><br><br>";	
+	
+	echo gmp_strval ( gmp_init($numero, 10), 62 );
+	
+	}
+*/	
 ?>
 </body>
 </html>

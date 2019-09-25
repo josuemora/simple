@@ -13,6 +13,7 @@ try {
 	$datos_consulta = "";
 	if($accion=="consultar" && $recordset->rowCount()>0){
 		while($row = $recordset->fetch(PDO::FETCH_ASSOC) ){
+			
 			foreach($row as $key=>$val){
 				$datos_consulta .= "<$key><![CDATA[$val]]></$key>";
 			}

@@ -5,12 +5,13 @@ $config_apps = array();
 $config_apps['jquery-ui_temas_dir_url'] = '/jquery-ui-themes-1.12.1/themes/';
 $config_apps['jquery-ui_temas_archivo'] = 'jquery-ui.css';
 $config_apps['jquery-ui_url'] = '/jquery-ui-1.12.1/jquery-ui.min.js';
-$config_apps['jquery_url'] = '/jquery-ui-1.12.1/jquery-3.2.1.min.js';
+$config_apps['jquery_url'] = '/jquery-ui-1.12.1/jquery-3.4.1.min.js';
 
 //$config_apps['fontawesome-free_url'] = '/fontawesome-free-5.1.0-web/css/all.css';
 //$config_apps['fontawesome-free_url'] = '/fontawesome-free-5.0.7/web-fonts-with-css/css/fontawesome-all.min.css';
 //$config_apps['fontawesome-free_url'] = '/fontawesome-free-5.6.3-web/css/all.css';
-$config_apps['fontawesome-free_url'] = '/fontawesome-free-5.8.2-web/css/all.css';
+//$config_apps['fontawesome-free_url'] = '/fontawesome-free-5.8.2-web/css/all.css';
+$config_apps['fontawesome-free_url'] = '/fontawesome-free-5.11.2-web/css/all.css';
 
 
 $config_apps['libs_css_url'][] = 'config/misCSS.css';

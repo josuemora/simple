@@ -10,6 +10,12 @@ Es un intento de aplicar el principio KISS (Keep It Simple, Stupid)/(Keep It Sho
 Realizado en PHP, MySql/MariaDB, HTML5, jQuery, jQuery UI, fontawesome-free.
 (PHP 5/PHP 7/ MySQL 5/MariaDB 10/jQuery 3.2.1+/jQuery UI 1.12.1+/fontawesome-free-5.0.7+).
 
+URL's Librerias:
+	https://fontawesome.com/download
+	https://jquery.com/download/
+	https://jqueryui.com/download/
+	https://github.com/RobinHerbots/Inputmask
+	
 
 
 Usuario: Administrador

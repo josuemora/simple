@@ -77,7 +77,7 @@ EOD;
 			}
 		}
 		
-		if($campo['valor'] != '##boton_cambiar##' && $campo['valor'] != '##boton_eliminar##' ){
+		if($campo['valor'] != '##boton_cambiar##' && $campo['valor'] != '##boton_eliminar##' && $campo['valor'] != '##indice##'  ){
 			$pColumnasEtiquetas .= "<td><div {$atributosTitCampo} >{$campo['etiqueta']}</div></td>";
 			$pColumnasValor .= "<td><div {$atributosCampo} >##{$campo['valor']}##</div></td>";
 			$pColumnasCR .= "cad  = cad.replace(/##{$campo['valor']}##/g,$(xml).find('{$campo['valor']}').text());\n";
@@ -93,6 +93,12 @@ EOD;
 			$pContBtnEliminar = $campo['etiqueta'];
 			$pColumnasEtiquetas .= "<td></td>";
 			$pColumnasValor .= "<td>##boton_eliminar##</td>";
+		}
+
+		if($campo['valor'] == '##indice##' ){
+			$pContBtnEliminar = $campo['etiqueta'];
+			$pColumnasEtiquetas .= "<td>No.</td>";
+			$pColumnasValor .= "<td>##indice##</td>";
 		}
 		
 	}
@@ -147,6 +153,7 @@ EOD;
 			$pDlgRenglones .= " $key=\"$val\" ";
 		}
 		$pDlgRenglones .= ">\n";
+		
 		foreach($renglon['columnas'] as $columna){
 			$pDlgRenglones .= '<td';
 			foreach($columna['atributos'] as $key => $val){
@@ -550,6 +557,7 @@ $cadTVF
 		$tempBtnAgregar
 		<button onclick="buscar_plus('$pModulo','anterior')"> $pContBtnAnterior </button>
 		<button onclick="buscar_plus('$pModulo','siguiente')"> $pContBtnSiguiente</button>
+		<div id="mensajes_$pModulo"></div>
 	</div>
 </div><!--termina rb-->          
 

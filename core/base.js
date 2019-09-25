@@ -212,7 +212,7 @@ function buscar_plus(pmodulo,psentido){
 		}else{
 			var rowCount = table.rows.length - 1;
 			var ilimite  = parseInt($('#'+pmodulo+'_limite').val());
-			if(rowCount >= ilimite){
+			if(rowCount >= ilimite ){
 				$('#'+pmodulo+'_pagina').val(ipag+1);
 			}
 		}
@@ -337,6 +337,9 @@ function buscar(modulo){
 			cad_default  = cad_default.replace(/##regSeleccion##/g,'regSeleccion');
 			var cad = '';
 
+			if($(xml).find('rowsCount').text()!=''){ 
+				$('#mensajes_'+modulo+'').html($(xml).find('rowsCount').text()+' Registros encontrados')
+			};
 			
 			var indice = 1;	
 			$(xml).find(modulo).each(function(){
@@ -617,25 +620,28 @@ function sigEnter_foco_inputs(){
 			var objTabla = $(e.target).closest("tbody");
 			var totRen = $('tr',objTabla).length;
 			var objTR = $(e.target).closest("tr");
-			var numRen = $('input[name*=NumRen]', objTR).val();
+			var numRen = $('input[name^=NumRen]', objTR).val();
 			var numTR = $('tr',objTabla).index(objTR) + 1;
 			console.log('numTR '+numTR+' numRen '+numRen);
-			if(numTR == totRen){
+			if(numTR == totRen){//si es el ultimo TR de la tabla...
 				var i = parseInt(numRen) + 1;
 				var ren = '_' + i;
 				console.log('i '+i);
 				var regExp = new RegExp("_" + numRen , 'g');
 				//txt1: debe ser el mismo texto declarado en la plantilla1 en la variable $pTabRen
-				var txt1 = '<input type="hidden" name="NumRen[]" value="'+numRen+'">'; 
-				var txt2 = '<input type="hidden" name="NumRen[]" value="'+i+'">';
+				//var txt1 = '<input type="hidden" name="NumRen[]" value="'+numRen+'">'; 
+				//var txt2 = '<input type="hidden" name="NumRen[]" value="'+i+'">';
+				//console.log(txt2);
 				//var $tr    = $(e.target).closest('tr');
 				objTabla.find('select').selectmenu('destroy');
 				objTabla.find('input:checkbox, input:radio').checkboxradio('destroy');
 
 
 				var $clone = objTR.clone();
-				$clone.html($clone.html().replace(regExp,ren).replace(txt1,txt2));
+				//$clone.html($clone.html().replace(regExp,ren).replace(txt1,txt2));
+				$clone.html($clone.html().replace(regExp,ren));
 				$clone.find(':text').val('');
+				$clone.find('input[name^=NumRen]').val(i);
 
 				objTR.after($clone);
 				
@@ -667,11 +673,22 @@ function sigEnter_foco_inputs(){
 		}
 		
 		if(e.ctrlKey && e.shiftKey){ 
-			var totRen = $(e.target).closest('tr').index() + 1;
-			if(totRen>1){
+			var objTabla = $(e.target).closest("tbody");
+			var totRen = $('tr',objTabla).length;
+			var numTR = $(e.target).closest('tr').index() + 1;
+			//console.log(' borrar renglon numTR '+numTR+' totRen '+totRen);
+			if(totRen>0){
 				var objdlg = $(e.target).closest(".ui-dialog");
 				var objFrm = $(e.target).closest("form");
-				$('.inputs:last',$(e.target).closest("tr").prev()).focus();
+				
+				if(totRen>1 && numTR>1){
+					$('.inputs:last',$(e.target).closest("tr").prev()).focus();
+				}else if(totRen>1 && numTR==1){
+					$('.inputs:first',$(e.target).closest("tr").next()).focus();
+				}else{
+					$('.inputs:first',$(e.target).closest(".ui-dialog")).focus();
+				}
+				
 				$(e.target).closest("tr").remove();
 				if($('input[name=accion]',objFrm).val()!='eliminar'){
 					$('input[name=guardaCache]',objFrm).val('1');

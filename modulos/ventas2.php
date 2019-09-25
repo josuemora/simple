@@ -29,6 +29,7 @@ $aDat['NumeroRegistros'] = $aNumeroRegistros;
 
 //importante que exista una columna con valor de id, que identifique el registro para las acciones de Agregar, Cambiar o Eliminar...
 $aColumnas = array();
+$aColumnas[] = array('valor'=>'rowid','etiqueta'=>'No.');
 $aColumnas[] = array('valor'=>'id','etiqueta'=>'id_ventas');
 $aColumnas[] = array('valor'=>'clientes_id','etiqueta'=>'Id Cliente');
 $aColumnas[] = array('valor'=>'nombre','etiqueta'=>'Cliente Nombre');

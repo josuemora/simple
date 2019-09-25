@@ -46,6 +46,7 @@ try {
   $vinculo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
   $vinculo->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
   $vinculo->setAttribute(PDO::ATTR_PERSISTENT, false);
+  //$vinculo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES,true);
   
 } catch (Exception $e) {
   die("Falló la Conexión: " . $e->getMessage());

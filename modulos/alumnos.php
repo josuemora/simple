@@ -44,7 +44,7 @@ $aDlgCol = array();
 $aDlgCol[0]['atributos'] = array();
 $aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'id_alumnos');
 $aDlgCol[1]['atributos'] = array();
-$aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'id','class'=>'inputs','style'=>'width:60px;');
+$aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'id','class'=>'inputs','style'=>'width:160px;');
 $aDlgRenglones[] = array('atributos'=>array('id'=>'row_id_alumnos','style'=>'visibility:visible;'),'columnas'=>$aDlgCol);
 
 $aDlgCol = array();
