@@ -6,7 +6,6 @@ function simplePlantilla1($aDat=array()){
 	$pDlgWidth  = $aDat['aDlg']['width'];
 	$pDlgHeight = isset($aDat['aDlg']['height']) ? 'height: '.$aDat['aDlg']['height'].',' : '';
 	$pSeguirAgregando = isset($aDat['SeguirAgregando']) ? $aDat['SeguirAgregando'] : '1';
-	$pDlgEventoAlAbrir = isset($aDat['EventoAlAbrir']) ? $aDat['EventoAlAbrir'] : '';
 
 
 
@@ -165,29 +164,19 @@ EOD;
 				$aatributos = isset($objeto['atributos']) ? $objeto['atributos'] : array();
 				$atributos = '';
 				$width = '';
-				if(isset($objeto['class'])){
-					$aatributos['class'] = $objeto['class'];
-				};
-				if(isset($objeto['style'])){
-					$aatributos['style'] = $objeto['style'];
-				};
-				if(isset($objeto['width'])){
-					$aatributos['width'] = $objeto['width'];
-				};
 				foreach($aatributos as $key => $val){
 					if($key == 'class' || $key == 'style' || $key == 'width'){
 						$$key = $val;
 					}
 					$atributos .= " $key=\"$val\" ";
 				}
+				$class = isset($objeto['class']) ? $objeto['class'] : '';
+				$style = isset($objeto['style']) ? $objeto['style'] : '';
 				if($objeto['tipo']=='etiqueta' || $objeto['tipo']=='html'){
 					$pDlgRenglones .= $objeto['referencia']."\n";
 				}
 				if($objeto['tipo']=='text' || $objeto['tipo']=='hidden'){
-					//$pDlgRenglones .= "<input type=\"{$objeto['tipo']}\" class=\"$class\" id=\"dlg_{$objeto['referencia']}_$pModulo\" name=\"{$objeto['referencia']}\" value=\"\" style=\"$style\" />\n";
-
-					$pDlgRenglones .= "<input type=\"{$objeto['tipo']}\" id=\"dlg_{$objeto['referencia']}_$pModulo\" name=\"{$objeto['referencia']}\" value=\"\" $atributos />\n";
-					
+					$pDlgRenglones .= "<input type=\"{$objeto['tipo']}\" class=\"$class\" id=\"dlg_{$objeto['referencia']}_$pModulo\" name=\"{$objeto['referencia']}\" value=\"\" style=\"$style\" />\n";
 					$pDlgCR .= "$(\"#dlg_{$objeto['referencia']}_$pModulo\").val($(xml).find(\"{$objeto['referencia']}\").text());\n";
 				}
 				if($objeto['tipo']=='table'){
@@ -418,8 +407,7 @@ EOD;
 					$pDlgCR .= "$(\"#dlg_{$name}_$pModulo\").prop(\"checked\",$(xml).find(\"{$name}\").text()=='{$value}');\n";
 				}
 				if($objeto['tipo']=='botonlista'){				
-					//$pDlgRenglones .= "<button onclick=\"fcomun_{$objeto['referencia_modulo']} = 'bl_{$objeto['referencia']}' ; $('#dlg_{$objeto['referencia_modulo']}').dialog('open');\" id=\"bl_{$objeto['referencia']}\" class=\"{$objeto['class']}\"  style=\"{$objeto['style']}\"><i class=\"fa fa-ellipsis-h\"></i></button>\n";
-					$pDlgRenglones .= "<button onclick=\"fcomun_{$objeto['referencia_modulo']} = 'bl_{$objeto['referencia']}' ; $('#dlg_{$objeto['referencia_modulo']}').dialog('open');\" id=\"bl_{$objeto['referencia']}\" $atributos><i class=\"fa fa-ellipsis-h\"></i></button>\n";
+					$pDlgRenglones .= "<button onclick=\"fcomun_{$objeto['referencia_modulo']} = 'bl_{$objeto['referencia']}' ; $('#dlg_{$objeto['referencia_modulo']}').dialog('open');\" id=\"bl_{$objeto['referencia']}\" class=\"{$objeto['class']}\"  style=\"{$objeto['style']}\"><i class=\"fa fa-ellipsis-h\"></i></button>\n";
 					$pParam = '';
 					foreach($objeto['CamposReceptores'] as $param){
 						$pParam .= "\n$(\"#dlg_{$param}_$pModulo\").val($param);\n";
@@ -620,9 +608,6 @@ var actualizaTotales_$pModulo = function(){};
 		modal: true,
 		open: function( event, ui ) {
 			$('#dlg_guardaCache_$pModulo').val('0');
-			
-			$pDlgEventoAlAbrir
-			
 			$funcionSubPlantilla
 		},		
 		buttons: [

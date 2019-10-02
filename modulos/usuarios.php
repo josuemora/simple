@@ -138,6 +138,8 @@
 </tr>
 </table>
 <input type="hidden" id="dlg_accion_usuarios" name="accion" value="consultar" />
+<input type="hidden" id="dlg_SeguirAgregando_usuarios" name="dlg_SeguirAgregando_usuarios" value="1"/>
+<input type="hidden" id="dlg_guardaCache_usuarios" name="guardaCache" value="0" />
 
 </form>
 

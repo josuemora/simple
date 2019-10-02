@@ -175,6 +175,8 @@
 </tr>
 </table>
 <input type="hidden" id="dlg_accion_accesos" name="accion" value="consultar" />
+<input type="hidden" id="dlg_SeguirAgregando_accesos" name="dlg_SeguirAgregando_accesos" value="1"/>
+<input type="hidden" id="dlg_guardaCache_accesos" name="guardaCache" value="0" />
 
 </form>
 

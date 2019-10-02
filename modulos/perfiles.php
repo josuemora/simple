@@ -128,6 +128,8 @@
 </tr>
 </table>
 <input type="hidden" id="dlg_accion_perfiles" name="accion" value="consultar" />
+<input type="hidden" id="dlg_SeguirAgregando_perfiles" name="dlg_SeguirAgregando_perfiles" value="1"/>
+<input type="hidden" id="dlg_guardaCache_perfiles" name="guardaCache" value="0" />
 
 </form>
 
