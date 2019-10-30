@@ -7,6 +7,7 @@ $accion       	 = $_POST["accion"];
 $id_perfiles 	 = $_POST["id_perfiles"];
 
 $nombre 	 	 = isset($_POST["nombre"])? $_POST["nombre"] : '';
+$modulo = 'perfiles';
 
 include("../config/db_pdo.php");
 //checkPermiso($accion,'alumnos');

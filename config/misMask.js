@@ -21,6 +21,19 @@ Inputmask.extendAliases({
  }
 });
 
+Inputmask.extendAliases({
+  'maskEntero': {
+    alias: "integer",
+	autoUnmask: true,
+	groupSeparator: "",
+	placeholder: "",
+	autoGroup: false,
+	allowPlus: false,
+	allowMinus: false,
+	positionCaretOnClick: "select"
+
+ }
+});
 
 Inputmask.extendAliases({
   'maskDecimal2': {
@@ -79,6 +92,7 @@ function aplicaMask(){
 	);
 	
 	$(".maskEnteroComa").inputmask("maskEnteroComa");
+	$(".maskEntero").inputmask("maskEntero");
 	$(".maskDecimal2").inputmask("maskDecimal2");
 	$(".maskMoneda").inputmask("maskMoneda");
 	$(".maskMoneda2").inputmask("maskMoneda2");

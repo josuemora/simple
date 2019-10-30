@@ -19,8 +19,13 @@ $config_apps['libs_css_url'][] = 'config/misCSS.css';
 
 //$config_apps['libs_js_url'][] = '/inputmask-3.3.11/dist/jquery.inputmask.bundle.js';
 //$config_apps['libs_js_url'][] = '/inputmask-3.3.11/dist/inputmask/bindings/inputmask.binding.js';
-$config_apps['libs_js_url'][] = '/inputmask-4.x/dist/jquery.inputmask.bundle.js';
-$config_apps['libs_js_url'][] = '/inputmask-4.x/dist/inputmask/bindings/inputmask.binding.js';
+$config_apps['libs_js_url'][] = '/Inputmask-4.x/dist/jquery.inputmask.bundle.js';
+$config_apps['libs_js_url'][] = '/Inputmask-4.x/dist/inputmask/bindings/inputmask.binding.js';
+$config_apps['libs_js_url'][] = '/gauge.js-gh-pages/dist/gauge.min.js';
+//$config_apps['libs_js_url'][] = '/gauge.js-gh-pages/dist/gauge.js';
+
+$config_apps['libs_js_url'][] = '/Chart.js-2.8.0/dist/Chart.min.js';
+$config_apps['libs_js_url'][] = 'config/utils.js';
 $config_apps['libs_js_url'][] = 'config/datepicker_es.js';
 $config_apps['libs_js_url'][] = 'config/misMask.js';
 $config_apps['libs_js_url'][] = 'config/misCompleta.js';
@@ -34,13 +39,16 @@ $config_apps['dir_modulos_js'] = 'modulos_js/';
 
 $aApps = array();
 
-$aApps[] = array ("appid"=>"App003","appdesc"=>"Facturación","appicon"=>"fa fa-users","modulos"=>array("clientes","productos","ventas","ventas2"));
-
 $aApps[] = array ("appid"=>"home000","appdesc"=>"Home","appicon"=>"fa fa-home","modulos"=>array("alumnos")); 
 
 $aApps[] = array ("appid"=>"App001","appdesc"=>"Catálogos","appicon"=>"fa fa-graduation-cap","modulos"=>array("grupos")); 
 
 $aApps[] = array ("appid"=>"App002","appdesc"=>"Catálogos Administrador","appicon"=>"fa fa-users","modulos"=>array("alumnos","grupos"));
+
+$aApps[] = array ("appid"=>"App003","appdesc"=>"Facturación","appicon"=>"fa fa-users","modulos"=>array("clientes","productos","ventas","ventas2"));
+
+
+$aApps[] = array ("appid"=>"App004","appdesc"=>"Métricos","appicon"=>"fas fa-chart-bar","modulos"=>array("areas","unidades","indicadores","registro","marcos","principales","resumen")); 
 
 
 

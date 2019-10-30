@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 // Limpiamos las variables 
 
@@ -35,6 +34,13 @@ if(isset($modulo)){
 		$user 		= "simple";
 		$pswd 		= "12345";	
 	}
+	if(strpos('areas,indicadores,marcos,principales,registro,unidades',$modulo)!== false){
+		$dbserver 	= "localhost";
+		$database 	= "metricos0";
+		$user 		= "simple";
+		$pswd 		= "12345";	
+	};
+	
 }	
 	
 

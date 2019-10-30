@@ -7,15 +7,16 @@ Simple no intenta ser un "Marco de Trabajo" (FrameWork), --o talvez un poco.
 Es un intento de no reescribir código en tareas repetitivas.
 Es un intento de crear aplicaciones web para el registro de datos permanentes. --"Crear, Leer, Actualizar y Borrar" (CRUD). 
 Es un intento de aplicar el principio KISS (Keep It Simple, Stupid)/(Keep It Short and Simple), --espero no haber realizado lo contrario.
-Realizado en PHP, MySql/MariaDB, HTML5, jQuery, jQuery UI, fontawesome-free.
-(PHP 5/PHP 7/ MySQL 5/MariaDB 10/jQuery 3.2.1+/jQuery UI 1.12.1+/fontawesome-free-5.0.7+).
+Realizado en PHP, MySql/MariaDB, HTML5, jQuery, jQuery UI, fontawesome-free, Inputmask, Chart.js , gauge.js
+(PHP 5/PHP 7/ MySQL 5/MariaDB 10/jQuery 3.2.1+/jQuery UI 1.12.1+/fontawesome-free-5.0.7+/Inputmask-4+/ ).
 
 URL's Librerias:
 	https://fontawesome.com/download
 	https://jquery.com/download/
 	https://jqueryui.com/download/
 	https://github.com/RobinHerbots/Inputmask
-	
+	https://www.chartjs.org/
+	http://github.com/bernii/gauge.js	
 
 
 Usuario: Administrador

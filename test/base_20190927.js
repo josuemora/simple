@@ -43,11 +43,6 @@ $(document).ready(function() {
 					if($("#" + modulo + "_pagina").length > 0){
 						buscar(modulo);
 					};
-					if(eval('$.isFunction(window.activar_'+modulo+')')){
-						eval('activar_'+modulo+'()');
-					//} else {
-					//	console.log('no existe la funcion de activar_'+modulo);
-					}
 				}
 	});
 	

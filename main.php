@@ -216,6 +216,7 @@ foreach($modulos_php as $modulo){
 	echo '<li class="seguridad seg_'.$modulo.'-acceso"><a href="#tabs_'.$i.'"  accesskey="'.$i.'" >'.ucfirst($modulo).'</a></li>'."\n";
 	$i = $i + 1;
 }
+
 ?>	
 </ul>
 
@@ -246,6 +247,7 @@ foreach($modulos_php as $modulo){
 	echo "</div>\n";
 	$i = $i + 1;
 }
+
 ?>	
 
     

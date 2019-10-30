@@ -4,7 +4,6 @@ include("funciones.php");
 checkAcceso();
 $cadxml 	= "";
 $modulo 	= $_POST["modulo"];
-$token 		= $_POST["token"];
 $limite 	= intval($_POST["limite"]);
 $pagina		= intval($_POST["pagina"]);
 
@@ -43,6 +42,37 @@ include("../consultas/QuerysPorModulo.php");
 $qry = sprintf($aModqry[$modulo]." %s %s limit %s,%s",$where,$orderby,$offset,$limite);
 $qryCount = sprintf("select count(*) as rowsCount from (".$aModqry[$modulo]." %s ) as CuentaRen",$where);
 
+/*
+if($modulo=="alumnos"){
+	$qry = sprintf("select a.*,concat(g.grado,' ',g.salon,' ',g.turno) as grupo from alumnos a left join grupos g on a.grupos_id=g.id %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+//echo $qry; exit();
+	}
+
+if($modulo=="lalumnos"){
+	$qry = sprintf("select a.*,concat(g.grado,' ',g.salon,' ',g.turno) as grupo from alumnos a left join grupos g on a.grupos_id=g.id %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+//echo $qry; exit();
+	}	
+
+	
+if($modulo=="grupos"){
+	$qry = sprintf("select g.* from grupos g %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+//echo $qry; exit();
+	}
+	
+
+	
+if($modulo=="accesos"){
+	$qry = sprintf("select a.*,p.nombre as perfil from simple_seguridad.accesos a left join simple_seguridad.perfiles p on a.perfiles_id=p.id %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+//echo $qry; exit();
+}
+	
+if($modulo=="perfiles"){
+	$qry = sprintf("select p.* from simple_seguridad.perfiles p %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+}
+if($modulo=="usuarios"){
+	$qry = sprintf("select u.*,p.nombre as perfil from simple_seguridad.usuarios u left join simple_seguridad.perfiles p on u.perfiles_id=p.id %s %s limit %s,%s",$where,$orderby,$offset,$limite);
+}
+*/
 
 if($recordset = $vinculo->query($qry)){
 	$rowid = $offset;

@@ -1,2 +1,4 @@
 2018-06-10 	Liberación de la version 1
 			Con dos plantillas definidas /core/plantilla1.php /core/plantilla_listado1.php
+2019-10-30	Se realizan cambios en la plantilla1.php agregando los parametros: "AccionAlLlenarReg", "EventoAlAbrir"
+			Se agregan las librerias Chart.js y gauge.js para crear un modulo de metricos.

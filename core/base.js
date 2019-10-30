@@ -75,6 +75,7 @@ $(document).ready(function() {
 
 
 
+
 $.extend({
 ucwords : function(str) {
     strVal = '';
@@ -85,7 +86,7 @@ ucwords : function(str) {
     return strVal
 }
 	
-	
+
 });	
 
 //cargar_botonesx();

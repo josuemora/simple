@@ -21,9 +21,30 @@ $aModqry['productos'] = "select p.* from productos p ";
 //$aModqry['detventas'] = "select d.*,p.descripcion from detventas d left join productos p on d.productos_id=p.id";
 $aModqry['detventas'] = "select d.id, d.productos_id,format(d.cantidad,2) as cantidad,format(d.precio,2) as precio,format(d.cantidad*d.precio,2) as importe,p.descripcion from detventas d left join productos p on d.productos_id=p.id";
 
+
+$aModqry['areas'] = "select a.* from areas a ";
+$aModqry['unidades'] = "select u.* from unidades u ";
+
+
+$aModqry['indicadores'] = "select i.*, a.descorta from metricos0.indicadores i left join metricos0.areas a on i.areas_id=a.id";
+$aModqry['lindicadores'] = "select i.* from metricos0.indicadores i ";
+
+$aModqry['registro'] = "select re.*,i.indicador,i.descripcion,i.usuarios from metricos0.regind_enc re left join metricos0.indicadores i on re.indicadores_id=i.id ";
+$aModqry['marcos'] = "select m.* from metricos0.marco_enc m ";
+
+
 //Querys para los totales...
 $aModTotqry = array();
 $aModTotqry['detventas'] = "select concat('Regs.',count(id)) as productos_id,format(sum(d.cantidad),2) as cantidad,format(sum(d.cantidad*d.precio),2) as importe,'Totales' as descripcion from detventas as d   ";
+
+//Se agregan condiciones a la variable $where del archivo core/lee_modulo.php
+if(isset($modulo) && isset($where)){
+	if($modulo == 'registro' && $_SESSION['accesos'][$token]["perfil_usuarios"]=='Usuario'){
+	
+		$where = $where == '' ? ' where 1=1 ' : $where;
+		$where .= " and i.usuarios like '%[".$_SESSION["accesos"][$token]["id_usuarios"]."]%' ";
+	};
+};
 
 
 ?>
