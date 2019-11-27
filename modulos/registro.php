@@ -46,15 +46,17 @@ $aDat = array();
 
 $aDat['modulo'] = 'registro';
 //$aDat['TabEliminar'] = "0";
-$aDat['aDlg'] = array('titulo'=>'Registro de Indicadores','width'=>'1200','height'=>'740');
+$aDat['aDlg'] = array('titulo'=>'Registro','width'=>'1200','height'=>'740');
 $aDat['SeguirAgregando'] = 0;
 $aDat['EventoAlAbrir'] = 'CreaGrafico();';
+$aDat['AccionAlLlenarReg'] = 'completaRegistro(xml);';
 
 /*<!-- Agregar los campos para el filtro. el valor es con el formato SQL alias.campo -->*/
 $aFiltroCampos = array();
 $aFiltroCampos[] = array('valor'=>'re.id','etiqueta'=>'Registro');
-$aFiltroCampos[] = array('valor'=>'re.indicador_id','etiqueta'=>'id Indicador');
+$aFiltroCampos[] = array('valor'=>'i.indicador','etiqueta'=>'id Indicador');
 $aFiltroCampos[] = array('valor'=>'re.anio','etiqueta'=>'Año');
+$aFiltroCampos[] = array('valor'=>'a.descorta','etiqueta'=>'Area');
 //$aFiltroCampos[] = array('valor'=>'v.fecha','etiqueta'=>'Fecha');
 $aDat['FiltroCampos'] = $aFiltroCampos;
 
@@ -76,6 +78,7 @@ $aColumnas[] = array('valor'=>'id','etiqueta'=>'Reg.');
 $aColumnas[] = array('valor'=>'anio','etiqueta'=>'Año');
 $aColumnas[] = array('valor'=>'indicador','etiqueta'=>'Indicador');
 $aColumnas[] = array('valor'=>'descripcion','etiqueta'=>'Descripción');
+$aColumnas[] = array('valor'=>'descorta','etiqueta'=>'Area');
 $aDat['Columnas'] = $aColumnas;
 
 
@@ -122,6 +125,10 @@ $aDlgCol[0]['atributos'] = array();
 $aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'Año');
 $aDlgCol[1]['atributos'] = array();
 $aDlgCol[1]['objetos'][] = $inputAnio;
+//$aDlgCol[2]['atributos'] = array();
+$aDlgCol[1]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'Unidad');
+//$aDlgCol[3]['atributos'] = array();
+$aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'unidesc','class'=>'readonly','style'=>'width:150px;');
 $aDlgRenglones[] = array('atributos'=>array(),'columnas'=>$aDlgCol);
 
 
@@ -149,11 +156,12 @@ $aTabCols[] = array('titulo'=>'Mes','atributos'=>array('class'=>'','style'=>'wid
 				);
 				
 $atemp = array('class'=>'maskDecimal2 pintaGrafico','style'=>'width:90%;','autocomplete'=>'off'); 
+$atemp2 = array('class'=>'inputs maskDecimal2 pintaGrafico','style'=>'width:90%;','autocomplete'=>'off');
 if($_SESSION['accesos'][$token]["perfil_usuarios"]=='Usuario'){
 	$atemp['readonly'] 	= 'readonly';
+	$atemp2['class'] 	= $atemp2['class'].' bloqueaCaptura';
 }else{
 	$atemp['class'] 	= $atemp['class'].' inputs';
-	
 };
 
 
@@ -175,7 +183,7 @@ $aTabCols[] = array('titulo'=>'Excelente','atributos'=>array('class'=>'','style'
 				
 $aTabCols[] = array('titulo'=>'Valor','atributos'=>array('class'=>'','style'=>'width:100px;'),
 				'objetos'=>array(
-					array('tipo'=>'text','referencia'=>'valor','atributos'=>array('class'=>'inputs maskDecimal2 pintaGrafico','style'=>'width:90%;','autocomplete'=>'off'))
+					array('tipo'=>'text','referencia'=>'valor','atributos'=>$atemp2)
 					)
 				);
 

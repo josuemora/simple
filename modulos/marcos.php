@@ -7,14 +7,15 @@ $aDat = array();
 
 $aDat['modulo'] = 'marcos';
 //$aDat['TabEliminar'] = "0";
-$aDat['aDlg'] = array('titulo'=>'Registro de Marcos','width'=>'600','height'=>'740');
+$aDat['aDlg'] = array('titulo'=>'Marcos','width'=>'600','height'=>'760');
 $aDat['SeguirAgregando'] = 0;
 //$aDat['EventoAlAbrir'] = 'CreaGrafico();';
 
 /*<!-- Agregar los campos para el filtro. el valor es con el formato SQL alias.campo -->*/
 $aFiltroCampos = array();
 $aFiltroCampos[] = array('valor'=>'m.id','etiqueta'=>'Registro');
-$aFiltroCampos[] = array('valor'=>'m.comentario','etiqueta'=>'Comentarios');
+$aFiltroCampos[] = array('valor'=>'m.comentario','etiqueta'=>'Descripción');
+$aFiltroCampos[] = array('valor'=>'m.tablero','etiqueta'=>'Tablero');
 $aDat['FiltroCampos'] = $aFiltroCampos;
 
 
@@ -32,7 +33,8 @@ $aColumnas = array();
 //$aColumnas[] = array('valor'=>'rowid','etiqueta'=>'No.');
 $aColumnas[] = array('valor'=>'id','etiqueta'=>'Reg.');
 //$aColumnas[] = array('valor'=>'indicadores_id','etiqueta'=>'Id');
-$aColumnas[] = array('valor'=>'comentario','etiqueta'=>'Comentarios');
+$aColumnas[] = array('valor'=>'comentario','etiqueta'=>'Descripción');
+$aColumnas[] = array('valor'=>'tablero','etiqueta'=>'Tablero');
 $aDat['Columnas'] = $aColumnas;
 
 
@@ -52,9 +54,13 @@ $aDlgCol[0]['atributos'] = array();
 $aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'Descripción');
 $aDlgCol[1]['atributos'] = array();
 $aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'comentario','class'=>'inputs','style'=>'width:400px;');
+$aDlgRenglones[] = array('atributos'=>array(),'columnas'=>$aDlgCol);
 
-
-
+$aDlgCol = array();
+$aDlgCol[0]['atributos'] = array();
+$aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'Tablero');
+$aDlgCol[1]['atributos'] = array();
+$aDlgCol[1]['objetos'][] = array('tipo'=>'select','referencia'=>'tablero','tagOpciones'=>'tableros','max-height'=>'200px');
 $aDlgRenglones[] = array('atributos'=>array(),'columnas'=>$aDlgCol);
 
 

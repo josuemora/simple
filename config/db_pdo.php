@@ -34,7 +34,7 @@ if(isset($modulo)){
 		$user 		= "simple";
 		$pswd 		= "12345";	
 	}
-	if(strpos('areas,indicadores,marcos,principales,registro,unidades',$modulo)!== false){
+	if(strpos('areas,indicadores,marcos,registro,unidades',$modulo)!== false || substr($modulo,0,8)=='tablero_'){
 		$dbserver 	= "localhost";
 		$database 	= "metricos0";
 		$user 		= "simple";

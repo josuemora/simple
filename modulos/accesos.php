@@ -111,7 +111,7 @@
 
 
 
-<div id="dlg_accesos" title="accesos">
+<div id="dlg_accesos" title="accesos" titulo="Accesos">
 <form id="fdlg_accesos" name="fdlg_accesos" method="post" onsubmit="return false;">
 <table cellpadding="5" cellspacing="5">
 <tr id="row_id_accesos" style="visibility:visible">
@@ -149,14 +149,14 @@
 				echo '<input type="text" class="inputs" id="dlg_perfiles_filtro" onkeyup="FiltraAccesos()" placeholder="Filtrar Modulos..." title="Escribe un nombre de Modulo..." autocomplete="off"><br>';
 				echo '<table id="tableAccesos" border="0" cellpadding="0" cellspacing="0">';
 				
-				foreach($aBtns as $modulo=>$permisos){
+				foreach($aBtns as $kmodulo=>$permisos){
 					//print_r(array_unique($permisos));
 					echo '<tr>';
-					echo '<td><h4 style="margin-right:10px;">'.$modulo.'</h4></td>';
+					echo '<td><h4 style="margin-right:10px;">'.$kmodulo.'</h4></td>';
 					echo '<td>';
 					foreach(array_unique($permisos) as $permiso){ 
-						if(substr($permiso,0,strlen($modulo))==$modulo){
-							$etiq = str_replace("$modulo-",'',$permiso);
+						if(substr($permiso,0,strlen($kmodulo))==$kmodulo){
+							$etiq = str_replace("$kmodulo-",'',$permiso);
 							echo '<label for="dlg_perfiles_'."$permiso".'" style="margin-right:10px;margin-bottom:10px;">'."$etiq".'<input class="inputs"  id="dlg_perfiles_'."$permiso".'" type="checkbox" name="permiso[]" value="'."$permiso".'" ></label>';
 						}
 					}

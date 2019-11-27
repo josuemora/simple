@@ -8,5 +8,6 @@
 <div style=" position: relative; margin: auto; height: 75vh; width: 90vw;">
 		<canvas id="graficoResumen" style=""></canvas>
 	</div>
+<button onclick="generaPDFresumen();" style="margin:20px;"><i class="fas fa-file-pdf"></i></button>
 	
 </div><!--termina modulo-->

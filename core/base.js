@@ -39,7 +39,8 @@ $(document).ready(function() {
 	// Tabs
 	$('#tabs').tabs({
 		activate: function( event, ui ) {
-					var modulo = $("a",ui.newTab).html().toLowerCase();
+					//var modulo = $("a",ui.newTab).html().toLowerCase();
+					var modulo = $("a",ui.newTab).attr("modulo");
 					if($("#" + modulo + "_pagina").length > 0){
 						buscar(modulo);
 					};
@@ -530,9 +531,10 @@ function ABC_global(dlg_obj,pmodulo){
 }
 
 function consultar_registro(pid_registro,ptipo,pmodulo){
+	var ptitulo = $('#dlg_'+pmodulo).attr('titulo')
 	$('#dlg_guardaCache_'+pmodulo).val('0');
 	$("#mensajes").html('<img width="24" height="24" src="images/fancybox_loading.gif"/> Leyendo');
-	$("#dlg_general").dialog("option","title",$.ucwords(ptipo+" "+pmodulo));
+	$("#dlg_general").dialog("option","title",$.ucwords(ptipo+" "+ptitulo));
 	$("#dlg_general").dialog("open");
 	//console.log(pmodulo+' '+ptipo);
 	limpia_campos(pmodulo,ptipo);
@@ -573,7 +575,7 @@ function consultar_registro(pid_registro,ptipo,pmodulo){
 				}
 				
 				$("#dlg_general").dialog("close");
-				$("#dlg_"+pmodulo).dialog("option","title",$.ucwords(ptipo+" "+pmodulo));
+				$("#dlg_"+pmodulo).dialog("option","title",$.ucwords(ptipo+" "+ptitulo));
 				$("#dlg_"+pmodulo).dialog("open");
 			}else{
 				$("#dlg_general").dialog("close");
@@ -940,4 +942,9 @@ function aplicaCompleta(){};
 		}
 	});
 
+function exportarExcel(modulo){
+	var url = "core/lee_modulo.php?exportarExcel=1&"+$("#fb_"+modulo).serialize()
+		+ "&token=" + $('#token').val()+ "&appid=" + $('#appid').val();
+	window.open(url, '_blank');
+};
 

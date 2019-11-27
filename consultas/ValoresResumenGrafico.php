@@ -10,7 +10,7 @@ $indicador       	= isset($_POST["indicador"]) ? $_POST["indicador"] : '0';;
 $Anio = '2019';
 $Mes = '12';
 $accion				= "consultar";
-
+$modulo 	= 'tablero_';
 
 include("../config/db_pdo.php");
 //checkPermiso($accion,'alumnos');
@@ -37,14 +37,18 @@ $aColors = Array('red'=>'rgb(255, 99, 132)',
 $datasets = Array();
 
 
-$qry = "select rd.mes,avg(rd.valor) as promedio,i.descripcion from metricos0.regind_det rd left join metricos0.regind_enc re on re.id=rd.regind_enc_id left join metricos0.indicadores i on i.id=re.indicadores_id where i.indicador=$indicador group by rd.mes";
+$qry = "select rd.mes,avg(rd.valor) as promedio,i.descripcion,u.descorta as unidad,u.descripcion as unidesc from regind_det rd left join regind_enc re on re.id=rd.regind_enc_id left join indicadores i on i.id=re.indicadores_id left join unidades u on i.unidades_id=u.id where i.indicador=$indicador group by rd.mes";
 
 $descripcion = '';
-$dPromedio=array(0,0,0,0,0,0,0,0,0,0,0,0,null,null);
+$unidad = '';
+$unidesc = '';
+$dPromedio=array(0,0,0,0,0,0,0,0,0,0,0,0,null);
 if($recordset = $vinculo->query($qry)){
 	while ($row = $recordset->fetch(PDO::FETCH_ASSOC)  ) {
-		$dPromedio[$row['mes']-1] = $row['promedio'];
+		$dPromedio[$row['mes']-1] = round($row['promedio'],2);
 		$descripcion = $row['descripcion'];
+		$unidad = '('.$row['unidad'].') '.$row['unidesc'];
+		$unidesc = $row['unidesc'];
 		//var_dump($row);
 	};
 };
@@ -64,11 +68,11 @@ if($recordset = $vinculo->query($qry)){
 $datasets[] = Array('type'=>'bar','label'=>'Acumulado','borderColor'=>'white','backgroundColor'=>'red','borderWidth'=>2,'fill'=>false,'data'=>$dAcumulado);
 */
 
-$qry = "select re.anio,rd.mes,sum(rd.valor) as valor from metricos0.regind_det rd left join metricos0.regind_enc re on re.id=rd.regind_enc_id left join metricos0.indicadores i on i.id=re.indicadores_id where i.indicador=$indicador group by re.anio,rd.mes";
+$qry = "select re.anio,rd.mes,sum(rd.valor) as valor from regind_det rd left join regind_enc re on re.id=rd.regind_enc_id left join indicadores i on i.id=re.indicadores_id where i.indicador=$indicador group by re.anio,rd.mes";
 
 if($recordset = $vinculo->query($qry)){
 	$pAnio = '';
-	$dValores=array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+	$dValores=array(0,0,0,0,0,0,0,0,0,0,0,0,0);
 	$nC1 = 0;
 	$total_anio = 0;
 	$cuenta = 0;
@@ -83,7 +87,7 @@ if($recordset = $vinculo->query($qry)){
 			$dValores[13] = round($total_anio / $cuenta,2);
 			$color1 = array_values($aColors)[$nC1];
 			$datasets[] = Array('type'=>'bar','label'=>$pAnio,'borderColor'=>'white','backgroundColor'=>$color1,'borderWidth'=>2,'fill'=>false,'data'=>$dValores);
-			$dValores=array(0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+			$dValores=array(0,0,0,0,0,0,0,0,0,0,0,0,0);
 			$pAnio = $row['anio'];
 			$nC1 = $nC1 + 1 == count($aColors) - 1 ? 0 : $nC1 + 1;
 			$total_anio = 0;
@@ -95,13 +99,13 @@ if($recordset = $vinculo->query($qry)){
 	};
 	if($pAnio != ''){
 		$cuenta = $cuenta == 0 ? 1 : $cuenta;
-		$dValores[12] = $total_anio;
-		$dValores[13] = round($total_anio / $cuenta,2);
+		//$dValores[12] = $total_anio;
+		$dValores[12] = round($total_anio / $cuenta,2);
 		$datasets[] = Array('type'=>'bar','label'=>$pAnio,'borderColor'=>'white','backgroundColor'=>'blue','borderWidth'=>2,'fill'=>false,'data'=>$dValores);
 		
 	}
 };
-$respuesta = array('estatus'=>'S','datasets'=>$datasets,'descripcion'=>$descripcion);
+$respuesta = array('estatus'=>'S','datasets'=>$datasets,'descripcion'=>$descripcion,'unidad'=>$unidad);
 
 ob_end_clean();
 header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );

@@ -404,6 +404,20 @@ function alphaID($in, $to_num = false, $pad_up = false, $pass_key = null)
 }
 
 
+  // Original PHP code by Chirp Internet: www.chirp.com.au
+  // Please acknowledge use of this code by including this header.
+
+  function cleanData(&$str)
+  {
+    if($str == 't') $str = 'TRUE';
+    if($str == 'f') $str = 'FALSE';
+    if(preg_match("/^0/", $str) || preg_match("/^\+?\d{8,}$/", $str) || preg_match("/^\d{4}.\d{1,2}.\d{1,2}/", $str)) {
+      $str = "'$str";
+    }
+    if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+    $str = mb_convert_encoding($str, 'UTF-16LE', 'UTF-8');
+  }
+
 
 
 	

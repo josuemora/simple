@@ -111,7 +111,7 @@
 
 
 
-<div id="dlg_usuarios" title="usuarios">
+<div id="dlg_usuarios" title="usuarios" titulo='Usuarios'>
 <form id="fdlg_usuarios" name="fdlg_usuarios" method="post" onsubmit="return false;">
 <table cellpadding="5" cellspacing="5">
 <tr id="row_id_usuarios" style="visibility:visible">

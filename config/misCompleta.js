@@ -5,6 +5,7 @@ function aplicaCompleta(){
       .accordion({
         header: "> div > h3",
 		collapsible: true,
+		active: false,
 		heightStyle: "content",
 		activate:function( event, ui ) {
 			activar_principales();
@@ -22,6 +23,8 @@ function aplicaCompleta(){
           $( this ).accordion( "refresh" );
         }
       });	
+
+
 
 // [{name: 'id', minWidth: '70px',textAlign:'left'}, {name: 'descripcion', minWidth:'320px',textAlign:'left'}, {name: 'precio', minWidth:'200px',textAlign:'right'}]
 
@@ -139,38 +142,56 @@ function PintaGrafico(UltimoValor,Minimo,Meta,Excelente,idCanvas,idTextNum,digit
 	if(parseFloat(Meta) >= parseFloat(Minimo)){
 		//ValorInicial = 0;
 		//ValorMaximo = Excelente * 1.01;
-		ValorInicial = parseFloat(Minimo - (Minimo  * 0.1));
+		ValorInicial = parseFloat(Minimo - (Minimo  * 0.5));
 		ValorMaximo = parseFloat(Excelente) * 1.10;
+		ValorMaximo = parseFloat(Excelente);
 		if(parseFloat(UltimoValor) > parseFloat(ValorMaximo)){
 			ValorMaximo = UltimoValor;
 		};
 		if(parseFloat(UltimoValor) < parseFloat(ValorInicial)){
 			ValorInicial = UltimoValor;
 		};
-
+		/*
 		Zonas = [
 			   {strokeStyle: "#F03E3E", min: ValorInicial, max: Minimo},  // Red
 			   {strokeStyle: "#FFDD00", min: Minimo, max: Meta}, // Yellow
 			   {strokeStyle: "#30B32D", min: Meta, max: Excelente}, // Green
 			   {strokeStyle: "#0DDE16", min: Excelente, max: ValorMaximo} // Verde  , height: 1.1
 			];
+		*/
+		Zonas = [
+			   {strokeStyle: "#F03E3E", min: ValorInicial, max: Minimo},  // Red
+			   {strokeStyle: "#FFDD00", min: Minimo, max: Meta}, // Yellow
+			   {strokeStyle: "#30B32D", min: Meta, max: ValorMaximo} // Green
+			];
+
+		/*
 		lblZonas = {
 			font: "10px sans-serif",
 			labels: [parseFloat(ValorInicial),parseFloat(Minimo), parseFloat(Meta), parseFloat(Excelente),parseFloat(ValorMaximo)],
+			fractionDigits: digitosFraccion
+		  };	
+		  */
+		lblZonas = {
+			font: "10px sans-serif",
+			labels: [parseFloat(ValorInicial),parseFloat(Minimo), parseFloat(Meta),parseFloat(ValorMaximo)],
 			fractionDigits: digitosFraccion
 		  };	
 		//console.log(ValorInicial,UltimoValor,Minimo,Meta,Excelente,ValorMaximo);
 		//console.log(Zonas);
 
 	}else{
-		ValorInicial = parseFloat(Excelente - (Excelente  * 0.3));
-		ValorMaximo = parseFloat(Minimo) * 1.10;
+		//ValorInicial = parseFloat(Excelente - (Excelente  * 0.3));
+		//ValorMaximo = parseFloat(Minimo) * 1.10;
+		ValorInicial = parseFloat(Excelente);
+		ValorMaximo = parseFloat(Minimo)  * 1.30;
 		if(parseFloat(UltimoValor) > parseFloat(ValorMaximo)){
 			ValorMaximo = UltimoValor;
 		};
 		if(parseFloat(UltimoValor) < parseFloat(ValorInicial)){
 			ValorInicial = UltimoValor;
 		};
+		/*
 		Zonas = [
 			   {strokeStyle: "#0DDE16", min: ValorInicial, max: Excelente}, // Verde  , height: 1.1
 			   {strokeStyle: "#30B32D", min: Excelente, max: Meta}, // Green
@@ -180,6 +201,17 @@ function PintaGrafico(UltimoValor,Minimo,Meta,Excelente,idCanvas,idTextNum,digit
 		lblZonas = {
 			font: "10px sans-serif",
 			labels: [parseFloat(ValorInicial),parseFloat(Excelente), parseFloat(Meta), parseFloat(Minimo),parseFloat(ValorMaximo)],
+			fractionDigits: digitosFraccion
+		  };	
+		*/
+		Zonas = [
+			   {strokeStyle: "#30B32D", min: ValorInicial, max: Meta}, // Verde 
+			   {strokeStyle: "#FFDD00", min: Meta, max: Minimo}, // Yellow
+			   {strokeStyle: "#F03E3E", min: Minimo, max: ValorMaximo} // red
+			];
+		lblZonas = {
+			font: "10px sans-serif",
+			labels: [parseFloat(ValorInicial),parseFloat(Meta), parseFloat(Minimo), parseFloat(ValorMaximo)],
 			fractionDigits: digitosFraccion
 		  };	
 			
@@ -229,14 +261,22 @@ function PintaGrafico(UltimoValor,Minimo,Meta,Excelente,idCanvas,idTextNum,digit
 
 //$("#PrincipalesAnio").selectmenu();
 //$("#PrincipalesMes").selectmenu();
+function activar_tablero_col_1(){
+	activar_principales();
+}
+function activar_tablero_mex_1(){
+	activar_principales();
+}
 	
 function activar_principales(){
 	//$("#PrincipalesAnio").selectmenu('destroy');
 	
 	var objMarco = $(".marco > .ui-state-active").closest("div");
-	
-	var Anio = $("#PrincipalesAnio").val();
-	var Mes = $("#PrincipalesMes").val();
+	var objTab = $(".ui-tabs-active > a").closest("a");
+	var tablero = $(objTab).attr("modulo");
+		
+	var Anio = $("#PrincipalesAnio_"+tablero).val();
+	var Mes = $("#PrincipalesMes_"+tablero).val();
 	//$(".graficoPrincipales").each(function(index, element) {
 	$(".graficoPrincipales",objMarco).each(function(index, element){
 		var idObj = $(this).attr('id');
@@ -245,6 +285,8 @@ function activar_principales(){
 		var slbl = 'g_'+aDat[1]+'_lbl_'+aDat[3]+'_'+aDat[4];
 		var sFec = 'g_'+aDat[1]+'_fec_'+aDat[3]+'_'+aDat[4];
 		var sUni = 'g_'+aDat[1]+'_uni_'+aDat[3]+'_'+aDat[4];
+		var sMet = 'g_'+aDat[1]+'_meta_'+aDat[3]+'_'+aDat[4];
+		var sLey = 'g_'+aDat[1]+'_leyenda_'+aDat[3]+'_'+aDat[4];
 		var indicador = aDat[3];
 		//console.log(idObj,sPT);
 		$.ajax({
@@ -267,10 +309,14 @@ function activar_principales(){
 						var descripcion = $(xml).find("descripcion").text();
 						var digfraccion = $(xml).find("digfraccion").text();
 						var descorta = $(xml).find("descorta").text();
+						var metaCad = $(xml).find("metacad").text(); 
+						var notas = $(xml).find("notas").text();
 						if(UltimoValor.length > 0){
 							$("#"+slbl).html(descripcion);
 							$("#"+sFec).html(anio+'-'+mesd);
 							$("#"+sUni).html(descorta);
+							$("#"+sMet).html(metaCad);
+							$("#"+sLey).html(notas);
 							PintaGrafico(UltimoValor,Minimo,Meta,Excelente,idObj,sPT,digfraccion);
 						}else{
 							$("#"+slbl).html('');
@@ -300,7 +346,7 @@ function irAresumen(pIndicador){
 
 
 	var chartData = {
-			labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Acumulado Anual','Promedio Anual'],
+			labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Promedio Anual'],
 			datasets: [
 			/*
 			{
@@ -335,7 +381,7 @@ function activar_resumen(){
 				borderColor: window.chartColors.blue,
 				borderWidth: 2,
 				fill: false,
-				data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+				data: [0,0,0,0,0,0,0,0,0,0,0,0,0]
 			}
 			];
 
@@ -361,13 +407,30 @@ function activar_resumen(){
 					tooltips: {
 						mode: 'index',
 						intersect: true
-					}
+					},
+					scales: {
+						xAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: 'Meses y Promedio Anual'
+							}
+						}],
+						yAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: ''
+							}
+						}]
+					},					
 				}
 			});
 		};
 		
 	
 	window.myMixedChart.options.title.text = "Indicacor "+indResumen;
+	window.myMixedChart.options.scales.yAxes = [{display:true,scaleLabel: {display:true,labelString:''}}];
 		
 	//console.log(chartData);
 	window.myMixedChart.update();
@@ -383,6 +446,7 @@ function activar_resumen(){
 					if(objson.estatus=='S'){
 						chartData.datasets = objson.datasets;
 						window.myMixedChart.options.title.text = indResumen+' '+objson.descripcion;
+						window.myMixedChart.options.scales.yAxes = [{display:true,scaleLabel:{display:true,labelString: objson.unidad},ticks:{callback: convierteMiles }}];
 						window.myMixedChart.update();
 					};
 					
@@ -394,6 +458,33 @@ function activar_resumen(){
 	
 	
 	
+};
+
+var convierteMiles = function(value,index,values){
+	var rval = '';
+	if(parseInt(value)>999){
+		rval = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}else{	
+		rval = value;
+	};
+	return rval;
+};
+
+function completaRegistro(xml){
+	$('.bloqueaCaptura').each(function(){
+		if(parseFloat($(this).val()) != 0){
+			var objTR = $(this).closest('tr');
+			//console.log($(objTR).html());
+			$('input',objTR).each(function(){
+				//console.log($(this).attr('id'),$(this).attr('readonly') != 'readonly',typeof $(this).attr('id') !== typeof undefined,$(this).attr('id') !== false);
+				if($(this).attr('readonly') != 'readonly' && typeof $(this).attr('id') !== typeof undefined && $(this).attr('id') !== false){
+					$(this).attr('readonly','readonly');
+					$(this).removeClass('inputs');
+					//console.log('Bloqueado: ',$(this).attr('id'));
+				};
+			});
+		};
+	});
 };
 
 function completaRegIndicadores(xml){
@@ -430,6 +521,71 @@ function completaRegIndicadores(xml){
 
 }
 
+function generaPDFprincipales(){
+	var obj = $(".marco > .ui-state-active").parent();//marco activo
+	var idObj = $(obj).attr('id');
+	var totRen = $('tr',obj).length;//total renglones del marco activo
+	var numRen = 3;//renglones por pagina
+	
+	$("html, body").scrollTop(0);
+
+	$("#mensajes").html('<img width="24" height="24" src="images/fancybox_loading.gif"/>');
+	$("#dlg_general").dialog("option","title","Creando archivo PDF...");
+	$("#dlg_general").dialog("open");
+
+	var doc = new jsPDF({orientation: 'landscape',format: 'letter',unit:'px'});
+	var width = doc.internal.pageSize.getWidth() - 20;
+	var height = doc.internal.pageSize.getHeight() - 20;
+	var Ren = 1;
+	var idRen = '';
+	var altoImg = 10;
+	var altoTit = 22;
+	var altoRen = 133;
+	var imgTit;
+	
+	html2canvas($(".marco > .ui-state-active")[0], { allowTaint: true }).then(function(canvasTit) {
+		//altoTit = $(canvasTit).height();
+		imgTit=canvasTit.toDataURL("image/jpeg", 1.0);
+		doc.addImage(imgTit,'JPEG',10,altoImg, width, altoTit);
+		altoImg = altoImg + altoTit + 5;
+
+		$('tr',obj).each(function(){
+			//idRen = $(this).attr('id');
+			//html2canvas(document.getElementById(idRen)).then(function(canvasRen) {
+			//html2canvas($(this).get(0)).then(function(canvasRen) {
+			html2canvas($(this)[0], { allowTaint: true }).then(function(canvasRen) {
+				var img=canvasRen.toDataURL("image/jpeg", 1.0);
+				doc.addImage(img,'JPEG',10,altoImg, width, altoRen);
+				//altoImg = altoImg + parseInt($(canvasRen).height()/2) + 5;
+				altoImg = altoImg + altoRen + 5;
+				if(totRen == Ren){
+					$("#dlg_general").dialog("close");
+					doc.save('indicadores.pdf');
+				}else if(Ren%numRen == 0){
+					doc.addPage();
+					altoImg = 10;
+					doc.addImage(imgTit,'JPEG',10,altoImg, width, altoTit);
+					altoImg = altoImg + altoTit + 5;
+				}
+				Ren = Ren + 1;
+			});
+		});
+	});
+};
+
+function generaPDFresumen(){
+	$("#mensajes").html('<img width="24" height="24" src="images/fancybox_loading.gif"/>');
+	$("#dlg_general").dialog("option","title","Creando archivo PDF...");
+	$("#dlg_general").dialog("open");
+	var img = document.getElementById('graficoResumen').toDataURL("image/png", 1.0);
+	var doc = new jsPDF({orientation: 'landscape',format: 'letter',unit:'px'});
+	var width = doc.internal.pageSize.getWidth() - 40;
+	var height = doc.internal.pageSize.getHeight() - 100;
+	doc.addImage(img,'PNG',20,50, width, height);
+	$("#dlg_general").dialog("close");
+	doc.save('resumen.pdf');
+};
+		
 
 aplicaCompleta();
 
@@ -437,6 +593,73 @@ aplicaCompleta();
 
 
 
+//========================
 
+/*
+
+function generaPDFprincipales_ant(){
+	var obj = $(".marco > .ui-state-active").parent();//marco activo
+	var idObj = $(obj).attr('id');
+	var totRen = $('tr',obj).length;//total renglones del marco activo
+	var numRen = 3;//renglones por pagina
+	
+	$("html, body").scrollTop(0);
+
+	$("#mensajes").html('<img width="24" height="24" src="images/fancybox_loading.gif"/>');
+	$("#dlg_general").dialog("option","title","Creando archivo PDF...");
+	$("#dlg_general").dialog("open");
+
+	if(totRen < 5){
+       html2canvas(document.getElementById(idObj)).then(function(canvas) {
+			var img=canvas.toDataURL("image/jpeg", 1.0);
+			var doc = new jsPDF({orientation: 'landscape',format: 'letter',unit:'px'});
+			var width = doc.internal.pageSize.getWidth() - 20;
+			var height = totRen == 4 ? doc.internal.pageSize.getHeight() - 20 : 0;
+			doc.addImage(img,'JPEG',10,10, width, height);
+			$("#dlg_general").dialog("close");
+			doc.save('indicadores.pdf');
+        });
+	}else{
+		var doc = new jsPDF({orientation: 'landscape',format: 'letter',unit:'px'});
+		var width = doc.internal.pageSize.getWidth() - 20;
+		var height = doc.internal.pageSize.getHeight() - 20;
+		var Ren = 1;
+		var idRen = '';
+		var altoImg = 10;
+		var altoTit = 0;
+		var imgTit;
+		
+		html2canvas($(".marco > .ui-state-active")[0], { allowTaint: true }).then(function(canvasTit) {
+			altoTit = $(canvasTit).height();
+			imgTit=canvasTit.toDataURL("image/jpeg", 1.0);
+			doc.addImage(imgTit,'JPEG',10,altoImg, width, 0);
+			altoImg = altoImg + parseInt(altoTit/2) + 5;
+
+			$('tr',obj).each(function(){
+				idRen = $(this).attr('id');
+				//html2canvas(document.getElementById(idRen)).then(function(canvasRen) {
+				//html2canvas($(this).get(0)).then(function(canvasRen) {
+				html2canvas($(this)[0], { allowTaint: true }).then(function(canvasRen) {
+					var img=canvasRen.toDataURL("image/jpeg", 1.0);
+					doc.addImage(img,'JPEG',10,altoImg, width, 0);
+					altoImg = altoImg + parseInt($(canvasRen).height()/2) + 5;
+					if(totRen == Ren){
+						$("#dlg_general").dialog("close");
+						doc.save('indicadores.pdf');
+					}else if(Ren%numRen == 0){
+						doc.addPage();
+						altoImg = 10;
+						doc.addImage(imgTit,'JPEG',10,altoImg, width, 0);
+						altoImg = altoImg + parseInt(altoTit/2) + 5;
+					}
+					Ren = Ren + 1;
+				});
+			});
+		});
+	};
+};
+
+
+*/
 
 	

@@ -136,6 +136,7 @@ EOD;
 	$pContBtnAnterior = isset($aDat['contenido_boton_anterior']) ? $aDat['contenido_boton_anterior'] : '<i class="fa fa-step-backward"></i>';	
 	$pContBtnSiguiente = isset($aDat['contenido_boton_siguiente']) ? $aDat['contenido_boton_siguiente'] : '<i class="fa fa-step-forward"></i>';	
 	$pContBtnBuscar = isset($aDat['contenido_boton_buscar']) ? $aDat['contenido_boton_buscar'] : '<i class="fa fa-search"></i>';	
+	$pContBtnExpExcel = isset($aDat['contenido_boton_expExcel']) ? $aDat['contenido_boton_expExcel'] : '<i class="far fa-file-excel"></i>';	
 		
 	$tempBtnAgregar = <<<EOD
 	<!--seguridad-{$pModulo}-agregar--><button class="seguridad seg_alumnos-agregar" onclick="consultar_registro('0','agregar','$pModulo')">{$pContBtnAgregar}</button><!--/seguridad-->
@@ -524,6 +525,7 @@ TDF;
 					$pNumeroRegistros
 				</select>
 			</td>
+			
 			<td align="right"><button onclick="buscar_inicio('$pModulo')">$pContBtnBuscar</button></td>
 			
 		</tr>
@@ -577,6 +579,7 @@ $cadTVF
 		$tempBtnAgregar
 		<button onclick="buscar_plus('$pModulo','anterior')"> $pContBtnAnterior </button>
 		<button onclick="buscar_plus('$pModulo','siguiente')"> $pContBtnSiguiente</button>
+		<button onclick="exportarExcel('$pModulo')">$pContBtnExpExcel</button>
 		<div id="mensajes_$pModulo"></div>
 	</div>
 </div><!--termina rb-->          
@@ -589,7 +592,7 @@ $cadTVF
 
 
 
-<div id="dlg_$pModulo" title="$pDlgTitulo">
+<div id="dlg_$pModulo" title="$pDlgTitulo" titulo="$pDlgTitulo">
 <form id="fdlg_$pModulo" name="fdlg_$pModulo" method="post" onsubmit="return false;">
 
 <table cellpadding="5" cellspacing="5">

@@ -9,6 +9,7 @@ $Anio       		= $_POST["Anio"];
 $Mes       			= $_POST["Mes"];
 $accion				= "consultar";
 
+$modulo 	= 'tablero_';
 
 include("../config/db_pdo.php");
 //checkPermiso($accion,'alumnos');
@@ -17,18 +18,18 @@ $aMeses = array('','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','
 
 $cadxml 	= '';
 $qryBloqueo = '';
-$modulo 	= 'ValoresGrafico';
 
 
 $wAnio = trim($Anio)=='' ? '' : " and re.anio=$Anio ";
 $wMes = trim($Mes)=='0' ? '' : " and rd.mes=$Mes ";
 
 //select rd.*,re.anio,i.indicador,i.descripcion from regind_det rd left join regind_enc re on re.id=rd.regind_enc_id left join indicadores i on i.id=re.indicadores_id where i.indicador=5090 order by anio,mes;
-$qry = "select rd.*,re.anio,i.indicador,i.descripcion,i.digfraccion,u.descorta from metricos0.regind_det rd left join metricos0.regind_enc re on re.id=rd.regind_enc_id left join metricos0.indicadores i on i.id=re.indicadores_id left join metricos0.unidades u on i.unidades_id=u.id where rd.valor<>0 and i.indicador=$indicador $wAnio $wMes order by anio desc,mes desc limit 1;";
+$qry = "select rd.*,re.anio,i.indicador,i.descripcion,i.digfraccion,u.descorta,u.descripcion as unidesc from regind_det rd left join regind_enc re on re.id=rd.regind_enc_id left join indicadores i on i.id=re.indicadores_id left join unidades u on i.unidades_id=u.id where rd.valor<>0 and i.indicador=$indicador $wAnio $wMes order by anio desc,mes desc limit 1;";
 
 if($recordset = $vinculo->query($qry)){
 	while ($row = $recordset->fetch(PDO::FETCH_ASSOC)  ) {
 		$row['mesd'] = $aMeses[$row['mes']];
+		$row['metacad'] = 'Meta: '.number_format($row['meta'],$row['digfraccion'],'.',',').' '.$row['unidesc'];
 		$cadxml .= "<$modulo>";
 		foreach($row as $key=>$val){
 			$cadxml .= "<$key><![CDATA[$val]]></$key>";

@@ -9,8 +9,8 @@ $id_m			= isset($_POST["id"]) ? $_POST["id"] : '0';
 
 $accion       	= $_POST["accion"];
 $comentario = $_POST["comentario"];
-
-$modulo = 'marcos';
+$tablero 	= $_POST["tablero"];
+$modulo 	= "marcos";
 
 include("../config/db_pdo.php");
 //checkPermiso($accion,'alumnos');
@@ -19,6 +19,21 @@ $cadxml = '';
 $aQry = Array();
 
 if($accion=="consultar" ){
+
+
+
+	$aTlableros = array(array('valor'=>'tablero_mex_1','texto'=>'1er. Nivel México'),array('valor'=>'tablero_col_1','texto'=>'1er. Nivel Colombia'));
+
+	$modulo = 'tableros';
+	$cadxml .= "<select_tablero>";
+	foreach($aTlableros as $row){
+		$cadxml .= "<$modulo>";
+		foreach($row as $key=>$val){
+			$cadxml .= "<$key><![CDATA[$val]]></$key>";
+		};
+		$cadxml .= "</$modulo>";
+	};
+	$cadxml .= "</select_tablero>";
 
 
 	$aMeses = array('','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
@@ -56,10 +71,12 @@ if($accion=="consultar" ){
 
 	//lectura de la tabla maestra (regind_enc)...
 	$aQry[] = "select me.* from marco_enc me where me.id=$id_m limit 1";
+
+
 }
 if($accion=="cambiar" || $accion=="agregar"){
 	if($accion=="agregar"){
-		$qry = "insert into marco_enc (comentario) values ('$comentario')";
+		$qry = "insert into marco_enc (comentario,tablero) values ('$comentario','$tablero')";
 		try {
 			$vinculo->beginTransaction();
 			$recordset = $vinculo->query($qry);
@@ -87,7 +104,7 @@ if($accion=="cambiar" || $accion=="agregar"){
 	};
 	if($accion=="cambiar"){
 		$aQry[] = "select * from marco_enc where id=$id_m for update;";
-		$aQry[] = "update marco_enc set comentario='$comentario' where id=$id_m";
+		$aQry[] = "update marco_enc set comentario='$comentario', tablero='$tablero' where id=$id_m";
 	};
 	$aQry[] = "select * from marco_det where marco_enc_id=$id_m for update;";
 	$aQry[] = "delete from marco_det where marco_enc_id=$id_m;";

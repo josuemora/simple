@@ -29,7 +29,7 @@ if($accion=="agregar"){
 }
 if($accion=="consultar"){
 
-	$qry = "select u.id as usuarios_id,u.nombre from simple_seguridad.usuarios u left join simple_seguridad.perfiles p on p.id=u.perfiles_id where p.nombre<>'Administrador'";
+	$qry = "select u.id as usuarios_id,u.nombre from manufactura_seguridad.usuarios u left join manufactura_seguridad.perfiles p on p.id=u.perfiles_id where p.nombre<>'Administrador'";
 
 	$modulo = 'lusuarios';
 	$cadxml .= "<lista_usuarios>";

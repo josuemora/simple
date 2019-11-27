@@ -29,7 +29,7 @@ $aModqry['unidades'] = "select u.* from unidades u ";
 $aModqry['indicadores'] = "select i.*, a.descorta from metricos0.indicadores i left join metricos0.areas a on i.areas_id=a.id";
 $aModqry['lindicadores'] = "select i.* from metricos0.indicadores i ";
 
-$aModqry['registro'] = "select re.*,i.indicador,i.descripcion,i.usuarios from metricos0.regind_enc re left join metricos0.indicadores i on re.indicadores_id=i.id ";
+$aModqry['registro'] = "select re.*,i.indicador,i.descripcion,i.usuarios,a.descorta from regind_enc re left join indicadores i on re.indicadores_id=i.id left join areas a on i.areas_id=a.id ";
 $aModqry['marcos'] = "select m.* from metricos0.marco_enc m ";
 
 

@@ -110,7 +110,7 @@
 
 
 
-<div id="dlg_perfiles" title="perfiles">
+<div id="dlg_perfiles" title="perfiles" titulo="Perfiles">
 <form id="fdlg_perfiles" name="fdlg_perfiles" method="post" onsubmit="return false;">
 <table cellpadding="5" cellspacing="5">
 <tr id="row_id_perfiles" style="visibility:visible">

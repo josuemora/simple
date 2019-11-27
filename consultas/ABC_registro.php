@@ -99,7 +99,7 @@ $qry = "select sum(cantidad) as sumcantidad,sum(cantidad*precio) as sumimporte f
 	
 */
 	//lectura de la tabla maestra (regind_enc)...
-	$aQry[] = "select re.*,i.indicador,i.descripcion,i.digfraccion from regind_enc re left join indicadores i on re.indicadores_id=i.id where re.id=$id_re limit 1";
+	$aQry[] = "select re.*,i.indicador,i.descripcion,i.digfraccion,u.descripcion as unidesc from regind_enc re left join indicadores i on re.indicadores_id=i.id left join unidades u on i.unidades_id=u.id where re.id=$id_re limit 1";
 }
 /*
 if($accion=="cambiar" || $accion=="agregar"){

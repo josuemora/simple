@@ -33,7 +33,7 @@ header('Content-type: text/html');
 
 <head>
 <meta charset="utf-8">
-<title>Simple</title>
+<title>Manufactura</title>
 	<!-- Add jQuery library -->
 		<?php
 		$dir_url	 = $config_apps['jquery-ui_temas_dir_url'];
@@ -196,7 +196,7 @@ echo '<script type="text/javascript" > var abtns='.json_encode($atmp).';</script
 			-->
 
 		<!-- /div-->
-	<div id="titulo" >Simple <br><span style="font-size:0.5em;font-style:italic; ">/Autor: Josu&eacute; Mora Ure&ntilde;a /email: joshua71@yahoo.com</span></div>
+	<div id="titulo" >Manufactura<br><span style="font-size:0.5em;font-style:italic; ">Aplicaci&oacute;n para registros generales</span></div>
 	<div class="campos_usuario"><button id="btn_salir" onclick="logout()">Salir</button></div>
 	<div class="campos_usuario">Usuario: <?php echo $_SESSION['accesos'][$token]["nombre_usuarios"]; ?></div>
 
@@ -208,24 +208,20 @@ echo '<script type="text/javascript" > var abtns='.json_encode($atmp).';</script
 
 </div>
 
-<ul>
-<?php
-$i = 1;
-foreach($modulos_php as $modulo){
-	$part = explode('.',$entry);
-	echo '<li class="seguridad seg_'.$modulo.'-acceso"><a href="#tabs_'.$i.'"  accesskey="'.$i.'" >'.ucfirst($modulo).'</a></li>'."\n";
-	$i = $i + 1;
-}
-
-?>	
-</ul>
 
 <?php
+$cabecera_tabs = '';
+$cuerpo_tabs = '';
+
 $i = 1;
 foreach($modulos_php as $modulo){
 	ob_start();
 	include("$dir_modulos_php$modulo.php");
 	$contenido = ob_get_clean();
+
+	$titulo = isset($aDat['aDlg']['titulo']) ? $aDat['aDlg']['titulo'] : $modulo;
+	$cabecera_tabs .=  '<li class="seguridad seg_'.$modulo.'-acceso"><a href="#tabs_'.$i.'"  accesskey="'.$i.'" modulo="'.$modulo.'">'.ucfirst($titulo).'</a></li>'."\n";
+
 	
 	//aplica permisos
 	if($_SESSION['accesos'][$token]["perfil_usuarios"] != 'Administrador'){
@@ -242,21 +238,25 @@ foreach($modulos_php as $modulo){
 		}
 	}
 	
-	echo '<div id="tabs_'.$i.'">'."\n";
-	echo $contenido;
-	echo "</div>\n";
+	$cuerpo_tabs .= '<div id="tabs_'.$i.'">'."\n";
+	$cuerpo_tabs .= $contenido;
+	$cuerpo_tabs .= "</div>\n";
 	$i = $i + 1;
+	$aDat = null;
 }
+
+echo '<ul>'.$cabecera_tabs.'</ul>'."\n\n";
+echo $cuerpo_tabs;
 
 ?>	
 
-    
-    
+<!--    
+<canvas width=380 height=300 id="foo"></canvas>
+    -->
 
 <div id="dlg_general" title="">
 <div id="mensajes"></div>
 </div>
-
 
 <?php
 
