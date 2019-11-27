@@ -26,7 +26,7 @@ Contraseña: simple
 
 ***Importante, requiere de las librerias jQuery, fontawesome-free e InputMask.
 ***Debes configurar los "PATHS" en el archivo ./config/apps.php
-***Debes ejecutar los archivos .sql de la carpeta ./core
+***Debes ejecutar los archivos .sql de la carpeta ./core/db_estructura
 
 
 
