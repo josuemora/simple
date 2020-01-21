@@ -1,3 +1,7 @@
+//varable de Relaciones entre modelos de Edicion a Listado
+var aRelModelos = [];	
+
+
 var confirma = false;
 var objdlg;
 
@@ -27,6 +31,7 @@ var fnBtnKeyDown = function(e) {
 
 
 $(document).ready(function() {
+
 
 	//Ajax
 /*	
@@ -86,7 +91,8 @@ ucwords : function(str) {
     }
     return strVal
 }
-	
+
+
 
 });	
 

@@ -5,10 +5,28 @@ function simplePlantilla_listado1($aDat=array()){
 	$pDlgTitulo = $aDat['aDlg']['titulo'];
 	$pDlgWidth  = $aDat['aDlg']['width'];
 	$pNumeroRegistros = $aDat['NumeroRegistros'];
+	$pModuloEdicion = isset($aDat['moduloEdicion']) ? $aDat['moduloEdicion'] : '';
 
 	$pContBtnAnterior = isset($aDat['contenido_boton_anterior']) ? $aDat['contenido_boton_anterior'] : '<i class="fa fa-step-backward"></i>';	
 	$pContBtnSiguiente = isset($aDat['contenido_boton_siguiente']) ? $aDat['contenido_boton_siguiente'] : '<i class="fa fa-step-forward"></i>';	
+	$pContBtnCambiar = isset($aDat['contenido_boton_editar']) ? $aDat['contenido_boton_editar'] : '<i class="fa fa-edit"></i>';	
+	$pContBtnAgregar = isset($aDat['contenido_boton_agregar']) ? $aDat['contenido_boton_agregar'] : '<i class="fa fa-plus"></i>';	
 	
+	$tempBtnCambiar = '';
+	$tempBtnAgregar = '';
+	$jsAgregarRelacionModelos = '';
+	if($pModuloEdicion != ''){
+		$jsAgregarRelacionModelos = 'aRelModelos.push({"ModEdicion":"'.$pModuloEdicion.'","ModListado":"'.$pModulo.'"});';
+		
+		$tempBtnCambiar = <<<EOD
+		<td><!--seguridad-{$pModuloEdicion}-cambiar--><button type="button" id="btnl2_{$pModulo}_##indice##" class="seguridad seg_{$pModuloEdicion}-cambiar" onclick="consultar_registro('##id##','cambiar','$pModuloEdicion')">{$pContBtnCambiar}</button><!--/seguridad--></td>
+EOD;
+		$tempBtnAgregar = <<<EOD
+	<!--seguridad-{$pModuloEdicion}-agregar--><button class="seguridad seg_{$pModuloEdicion}-agregar" onclick="consultar_registro('0','agregar','$pModuloEdicion')">{$pContBtnAgregar}</button><!--/seguridad-->
+EOD;
+		
+	};
+
 	
 	$pOpcionesFiltroCampos = "\n";
 	foreach($aDat['FiltroCampos'] as $campo){
@@ -75,6 +93,7 @@ $pOpcionesFiltroCampos
 		<tbody></tbody>
 	</table>
 	<div class="botones">
+		$tempBtnAgregar
 		<button onclick="buscar_plus('$pModulo','anterior')" tabindex="-1"> $pContBtnAnterior </button>
 		<button onclick="buscar_plus('$pModulo','siguiente')" tabindex="-1"> $pContBtnSiguiente </button>
 	</div>
@@ -83,7 +102,7 @@ $pOpcionesFiltroCampos
 
 <!-- Agregar los campos o alias a visualizar debe coincidir con la funcion llena_tabla_* -->
 <table id="table-default-$pModulo" style="visibility:hidden;display:none;">
-    <tr class="##regSeleccion##">$pColumnasValor<td><button type="button" id="btn1_{$pModulo}_##indice##"  class="" onclick="eval(fcomun_$pModulo +'($pPF2)')"><i class="fa fa-hand-pointer"></i></button></td></tr>
+    <tr class="##regSeleccion##">$pColumnasValor<td><button type="button" id="btnl1_{$pModulo}_##indice##"  class="" onclick="eval(fcomun_$pModulo +'($pPF2)')"><i class="fa fa-hand-pointer"></i></button></td>{$tempBtnCambiar}</tr>
 </table>
 
 </div><!--termina modulo-$pModulo-->
@@ -153,6 +172,9 @@ $("#filtro_valor_$pModulo").keypress(function(e){
 });
 
 buscar_inicio('$pModulo');
+
+$jsAgregarRelacionModelos
+
 
 </script>
 

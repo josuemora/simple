@@ -96,8 +96,10 @@ echo simplePlantilla1($aDat);
 
 $aDat = array();
 $aDat['modulo'] = 'lclientes';
+$aDat['moduloEdicion'] = 'clientes';
+
 //$aDat['TabEliminar'] = "0";
-$aDat['aDlg'] = array('titulo'=>'Listado de Clientes','width'=>'700');
+$aDat['aDlg'] = array('titulo'=>'Ventas','width'=>'700');
 
 /*<!-- Agregar los campos para el filtro. el valor es con el formato SQL alias.campo -->*/
 $aFiltroCampos = array();

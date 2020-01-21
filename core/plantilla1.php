@@ -667,6 +667,11 @@ var actualizaTotales_$pModulo = function(){};
   ],
 	close: function( event, ui ) {
 		buscar('$pModulo');
+		aRelModelos.forEach(function(oRelMod){
+			if(oRelMod.ModEdicion = '$pModulo'){
+				buscar(oRelMod.ModListado);
+			}
+		});
 	},
 	
    create:function () {

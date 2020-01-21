@@ -271,9 +271,9 @@ function activar_tablero_mex_1(){
 function activar_principales(){
 	//$("#PrincipalesAnio").selectmenu('destroy');
 	
-	var objMarco = $(".marco > .ui-state-active").closest("div");
 	var objTab = $(".ui-tabs-active > a").closest("a");
 	var tablero = $(objTab).attr("modulo");
+	var objMarco = $("#accordion_"+tablero+" > .marco > .ui-state-active").closest("div");
 		
 	var Anio = $("#PrincipalesAnio_"+tablero).val();
 	var Mes = $("#PrincipalesMes_"+tablero).val();
@@ -522,7 +522,11 @@ function completaRegIndicadores(xml){
 }
 
 function generaPDFprincipales(){
-	var obj = $(".marco > .ui-state-active").parent();//marco activo
+
+	var objTab = $(".ui-tabs-active > a").closest("a");
+	var tablero = $(objTab).attr("modulo");
+	var obj = $("#accordion_"+tablero+" > .marco > .ui-state-active").parent();//marco activo
+	//var obj = $(".marco > .ui-state-active").parent();
 	var idObj = $(obj).attr('id');
 	var totRen = $('tr',obj).length;//total renglones del marco activo
 	var numRen = 3;//renglones por pagina
@@ -543,7 +547,7 @@ function generaPDFprincipales(){
 	var altoRen = 133;
 	var imgTit;
 	
-	html2canvas($(".marco > .ui-state-active")[0], { allowTaint: true }).then(function(canvasTit) {
+	html2canvas($("#accordion_"+tablero+" > .marco > .ui-state-active")[0], { allowTaint: true }).then(function(canvasTit) {
 		//altoTit = $(canvasTit).height();
 		imgTit=canvasTit.toDataURL("image/jpeg", 1.0);
 		doc.addImage(imgTit,'JPEG',10,altoImg, width, altoTit);
