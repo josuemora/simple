@@ -68,6 +68,7 @@ function aplicaCompleta(){
 		var productos_id = $('input[name*=productos_id]', objTR).val();
 		var cantidad = $('input[name*=cantidad]', objTR).val();
 		var precio = $('input[name*=precio]', objTR).val();
+		var descuento = $('input[name*=descuento]', objTR).val();
 		var colorimp = $('input[name*=descripcion]', objTR).css("color"); //tomar el color
 		$('input[name*=importe]', objTR).val(0); //poner en cero para identificar el registro en la tabla
 		$('input[name*=importe]', objTR).css("color",'red');//poner en rojo
@@ -75,12 +76,12 @@ function aplicaCompleta(){
 			url: "consultas/ABC_detventas2.php",
 			dataType: "xml",
 			type : "POST",
-			data: "NumRen="+NumRen+ "&ventas_id="+ventas_id+ "&productos_id="+productos_id+ "&cantidad="+cantidad+ "&precio="+precio+ "&token=" + $('#token').val()+ "&appid=" + $('#appid').val(),
+			data: "NumRen="+NumRen+ "&ventas_id="+ventas_id+ "&productos_id="+productos_id+ "&cantidad="+cantidad+ "&precio="+precio+ "&descuento="+descuento+ "&token=" + $('#token').val()+ "&appid=" + $('#appid').val(),
 			success: function( xml ) {
 				if(xml!=null){
 					if($(xml).find("estatus").text()=="S"){
 						$("Registro",xml).each(function(){
-							console.log($("ren",this).text()+' '+$("ventas_id",this).text()+' '+$("productos_id",this).text()+' '+$("cantidad",this).text()+' '+$("precio",this).text()+' '+$("importe",this).text());
+							//console.log($("ren",this).text()+' '+$("ventas_id",this).text()+' '+$("productos_id",this).text()+' '+$("cantidad",this).text()+' '+$("precio",this).text()+' '+$("importe",this).text());
 							$('input[name*=descripcion]', objTR).val($("descripcion",this).text());//registro.descripcion 
 							$('input[name*=importe]', objTR).val($("importe",this).text());//registro.importe 
 							$('input[name*=importe]', objTR).css("color",colorimp);
@@ -138,12 +139,19 @@ function PintaGrafico(UltimoValor,Minimo,Meta,Excelente,idCanvas,idTextNum,digit
 	var ValorMaximo = 0;
 	var Zonas = [];
 	var lblZonas = {};
+	var dif1 = 0;
+	var dif2 = 0;
 	
 	if(parseFloat(Meta) >= parseFloat(Minimo)){
 		//ValorInicial = 0;
 		//ValorMaximo = Excelente * 1.01;
-		ValorInicial = parseFloat(Minimo - (Minimo  * 0.5));
-		ValorMaximo = parseFloat(Excelente) * 1.10;
+		
+		//ValorInicial = parseFloat(Minimo - (Minimo  * 0.5));
+		dif1 = parseFloat(Meta) - parseFloat(Minimo);
+		dif2 = parseFloat(Excelente) - parseFloat(Meta);
+		ValorInicial = dif1 <= dif2 ? parseFloat(Minimo - dif1) : parseFloat(Minimo - dif2) ;
+		
+		//ValorMaximo = parseFloat(Excelente) * 1.10;
 		ValorMaximo = parseFloat(Excelente);
 		if(parseFloat(UltimoValor) > parseFloat(ValorMaximo)){
 			ValorMaximo = UltimoValor;
@@ -184,7 +192,14 @@ function PintaGrafico(UltimoValor,Minimo,Meta,Excelente,idCanvas,idTextNum,digit
 		//ValorInicial = parseFloat(Excelente - (Excelente  * 0.3));
 		//ValorMaximo = parseFloat(Minimo) * 1.10;
 		ValorInicial = parseFloat(Excelente);
-		ValorMaximo = parseFloat(Minimo)  * 1.30;
+
+		//ValorMaximo = parseFloat(Minimo)  * 1.30;
+		dif1 = parseFloat(Minimo) - parseFloat(Meta);
+		dif2 = parseFloat(Meta) - parseFloat(Excelente);
+		ValorMaximo = dif1 >= dif2 ? (parseFloat(Minimo) + parseFloat(dif1)) : (parseFloat(Minimo) + parseFloat(dif2)) ;
+		//console.log(ValorInicial,ValorMaximo);
+
+
 		if(parseFloat(UltimoValor) > parseFloat(ValorMaximo)){
 			ValorMaximo = UltimoValor;
 		};
@@ -590,6 +605,71 @@ function generaPDFresumen(){
 	doc.save('resumen.pdf');
 };
 		
+
+function bloqueoCapturaNotaCerrada(xml){
+	//console.log($(xml).find("status").text());
+	var statusNota = $(xml).find("status").text();
+	if(statusNota != '0'){
+		$('#fdlg_ventas2 input:text, #fdlg_ventas2 input:password').each(function(){
+			$(this).prop("readonly",true);
+			
+		});
+		$("#fdlg_ventas2 input:checkbox, #fdlg_ventas2 input:radio, #fdlg_ventas2 select").each(function(){
+			$(this).prop("readonly",true);
+			$(this).prop("disabled",true);
+		});
+		$("#fdlg_ventas2 button").each(function(){
+			if($(this).attr('id').substr(0,3) == 'bl_'){
+				$(this).prop("disabled",true);
+			};
+		});
+		
+		//console.log($('button',$('#dlg_ventas2').parent()).html());
+		
+		$('.btnOK',$('#dlg_ventas2').parent()).each(function(){
+			$(this).prop("disabled",true);
+		});
+	}else{
+		$('.btnOK',$('#dlg_ventas2').parent()).each(function(){
+			$(this).prop("disabled",false);
+		});
+	};
+};
+
+function imprimirNotaVenta(objBtn){
+	var nota_id = $('#dlg_id_ventas2').val();
+	var status_val = $('#dlg_status_ventas2').val();
+	var functionOk = function(){
+		$.ajax({
+			url: "consultas/IMPRESION_notaVenta.php",
+			dataType: "xml",
+			type : "POST",
+			data: "nota_id="+nota_id+ "&token=" + $('#token').val()+ "&appid=" + $('#appid').val(),
+			error: function(xhr, status, text) {
+				//
+				//console.log('Error Ajax Impresion Nota de Venta');
+				alert('Error Ajax Impresion Nota de Venta');
+			},
+			success: function( xml ) {
+				if($(xml).find("estatus").text()=="S"){
+					alert('impresion de la nota...');
+					$('#dlg_status_ventas2').val($(xml).find("status").text());
+					bloqueoCapturaNotaCerrada(xml);
+				}else{
+					alert($(xml).find("mensaje").text());
+				};
+			}
+		});
+	};
+	
+	console.log(nota_id,status_val);
+	if(status_val == '0'){
+		$.confirm('¿Estas seguro de imprimir?, despues ya no podras realizar cambios.','Confirma!!!',functionOk);	
+	}else{
+		functionOk();
+	};
+};
+
 
 aplicaCompleta();
 

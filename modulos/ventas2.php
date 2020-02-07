@@ -9,6 +9,7 @@ $aDat['modulo'] = 'ventas2';
 //$aDat['TabEliminar'] = "0";
 $aDat['aDlg'] = array('titulo'=>'Ventas','width'=>'800','height'=>'800');
 $aDat['SeguirAgregando'] = 0;
+$aDat['AccionAlLlenarReg'] = 'bloqueoCapturaNotaCerrada(xml);';
 
 /*<!-- Agregar los campos para el filtro. el valor es con el formato SQL alias.campo -->*/
 $aFiltroCampos = array();
@@ -46,6 +47,8 @@ $aDlgCol[0]['atributos'] = array();
 $aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'id_ventas');
 $aDlgCol[1]['atributos'] = array();
 $aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'id','class'=>'inputs','style'=>'width:60px;');
+$aDlgCol[2]['atributos'] = array();
+$aDlgCol[2]['objetos'][] = array('tipo'=>'html','referencia'=>"<!--seguridad-ventas2-impresion--><button id=\"bs_impresionNota\" class=\"\" onclick=\"imprimirNotaVenta(this)\"><i class=\"fas fa-print\"></i></button><!--/seguridad-->");
 $aDlgRenglones[] = array('atributos'=>array('id'=>'row_id_ventas','style'=>'visibility:visible;'),'columnas'=>$aDlgCol);
 
 $aDlgCol = array();
@@ -54,7 +57,6 @@ $aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'Id Cliente');
 $aDlgCol[1]['atributos'] = array();
 $aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'clientes_id','class'=>'inputs readonly','style'=>'width:100px;');
 $aDlgCol[1]['objetos'][] = array('tipo'=>'botonlista','referencia'=>'lctevtas2','referencia_modulo'=>'lclientes','CamposReceptores'=>array('clientes_id','nombre'),'class'=>'inputs','style'=>'');
-$aDlgCol[1]['objetos'][] = array('tipo'=>'html','referencia'=>"<!--seguridad-ventas-autoriza1--><button id=\"bs_autoriza1\" class=\"inputs\" onclick=\"alert('hola')\">prueba</button><!--/seguridad-->");
 $aDlgRenglones[] = array('atributos'=>array(),'columnas'=>$aDlgCol);
 
 $aDlgCol = array();
@@ -62,6 +64,7 @@ $aDlgCol[0]['atributos'] = array();
 $aDlgCol[0]['objetos'][] = array('tipo'=>'etiqueta','referencia'=>'Cliente Nombre');
 $aDlgCol[1]['atributos'] = array();
 $aDlgCol[1]['objetos'][] = array('tipo'=>'text','referencia'=>'nombre','class'=>'inputs readonly','style'=>'width:400px;');
+$aDlgCol[1]['objetos'][] = array('tipo'=>'hidden','referencia'=>'status','class'=>'readonly','style'=>'');
 $aDlgRenglones[] = array('atributos'=>array(),'columnas'=>$aDlgCol);
 
 $aDlgCol = array();
@@ -98,6 +101,15 @@ $aTabCols[] = array('titulo'=>'Precio','atributos'=>array('class'=>'','style'=>'
 				'pie'=>array()
 				);
 
+
+$aTabCols[] = array('titulo'=>'%Desc.','atributos'=>array('class'=>'','style'=>'width:70px;'),
+				'objetos'=>array(
+					array('tipo'=>'text','referencia'=>'descuento','atributos'=>array('class'=>'inputs maskDescuento calcImp','style'=>'width:90%;'))
+					),
+				'pie'=>array()
+				);
+
+
 $aTabCols[] = array('titulo'=>'Importe','atributos'=>array('class'=>'','style'=>'width:150px;'),
 				'objetos'=>array(
 					array('tipo'=>'text','referencia'=>'importe','atributos'=>array('class'=>'maskMoneda2','style'=>'width:90%;','readonly'=>'readonly','tabindex'=>'-1','disabled'=>'disabled'))
@@ -106,7 +118,7 @@ $aTabCols[] = array('titulo'=>'Importe','atributos'=>array('class'=>'','style'=>
 				);
 
 $aDlgCol = array();
-$aDlgCol[0]['atributos'] = array('colspan'=>'2');
+$aDlgCol[0]['atributos'] = array('colspan'=>'3');
 $aDlgCol[0]['objetos'][] = array('tipo'=>'table','referencia'=>'tdventas2','tagRegistro'=>'tdventas2','columnas'=>$aTabCols,'muestraEncabezado'=>true,'muestraPie'=>true);
 $aDlgRenglones[] = array('atributos'=>array('class'=>'tablaDir'),'columnas'=>$aDlgCol);
 

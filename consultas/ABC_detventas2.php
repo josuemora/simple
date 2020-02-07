@@ -9,6 +9,7 @@ $productos_id	= $_POST["productos_id"];
 $id_ventas		= $_POST["ventas_id"];
 $cantidad		= $_POST["cantidad"];
 $precio			= $_POST["precio"];
+$descuento		= $_POST["descuento"];
 
 
 //validaciones
@@ -25,11 +26,11 @@ $modulo 	= 'producto';
 
 	$aQry[] = "select * from detventas2 where ren=$NumRen and ventas_id=$id_ventas for update;";
 	$aQry[] = "delete from detventas2 where ren=$NumRen and ventas_id=$id_ventas;";
-	$aQry[] = "insert into detventas2 (ren,ventas_id,productos_id,cantidad,precio) values ($NumRen,$id_ventas,$productos_id,$cantidad,$precio);";
+	$aQry[] = "insert into detventas2 (ren,ventas_id,productos_id,cantidad,precio,descuento) values ($NumRen,$id_ventas,$productos_id,$cantidad,$precio,$descuento);";
 	
-	$aQryR[] = array("modulo"=>"Registro","qry"=>"select v.*,p.descripcion,format(v.cantidad*v.precio,2) as importe from detventas2 v left join productos p on v.productos_id=p.id where v.ren=$NumRen and v.ventas_id=$id_ventas limit 1");
+	$aQryR[] = array("modulo"=>"Registro","qry"=>"select v.*,p.descripcion,format((v.cantidad*v.precio)-(v.cantidad*v.precio*(v.descuento/100)),2) as importe from detventas2 v left join productos p on v.productos_id=p.id where v.ren=$NumRen and v.ventas_id=$id_ventas limit 1");
 
-	$aQryR[] = array("modulo"=>"Totales","qry"=>"select sum(cantidad) as sumcantidad,sum(cantidad*precio) as sumimporte from detventas2 where ventas_id=$id_ventas;");
+	$aQryR[] = array("modulo"=>"Totales","qry"=>"select sum(cantidad) as sumcantidad, sum((cantidad*precio)-(cantidad*precio*(descuento/100))) as sumimporte from detventas2 where ventas_id=$id_ventas;");
 	
 	try {
 		$vinculo->beginTransaction();

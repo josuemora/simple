@@ -10,6 +10,7 @@ $id_ventas		= isset($_POST["id"]) ? $_POST["id"] : '0';
 $accion       	= $_POST["accion"];
 $clientes_id  	= $_POST["clientes_id"];
 $fecha			= $_POST["fecha"];
+$status			= $_POST["status"]; //status 0=No impresa 1=Impresa
 
 include("../config/db_pdo.php");
 //checkPermiso($accion,'alumnos');
@@ -40,7 +41,7 @@ if($accion=="consultar" ){
 	}
 	if(count($aRegs)==0){
 		//en caso de que no tenga registros se crea un registro en cache
-		$aRegs[] = array('ren'=>1,'ventas_id'=>$ventas_id,'productos_id'=>0,'cantidad'=>0,'precio'=>0,'importe'=>0);
+		$aRegs[] = array('ren'=>1,'ventas_id'=>$ventas_id,'productos_id'=>0,'cantidad'=>0,'precio'=>0,'desuento'=>0,'importe'=>0);
 	}
 	
 	
@@ -56,7 +57,7 @@ if($accion=="consultar" ){
 	$cadxml .= "</detventas2>";
 
 
-$qry = "select sum(cantidad) as sumcantidad,sum(cantidad*precio) as sumimporte from detventas2 v where  v.ventas_id=$id_ventas limit 1;";
+$qry = "select sum(cantidad) as sumcantidad,sum((cantidad*precio)-(cantidad*precio*(descuento/100))) as sumimporte from detventas2 v where  v.ventas_id=$id_ventas limit 1;";
 
 	$modulo = 'Totales';
 	if($recordset = $vinculo->query($qry)){
@@ -73,7 +74,7 @@ $qry = "select sum(cantidad) as sumcantidad,sum(cantidad*precio) as sumimporte f
 	//lectura de la tabla maestra (ventas2)...
 	$aQry[] = "select v.*,c.nombre from ventas2 v left join clientes c on v.clientes_id=c.id where v.id=$id_ventas limit 1";
 }
-if($accion=="cambiar" || $accion=="agregar"){
+if($accion=="cambiar" || $accion=="agregar" && $status == '0'){
 	$aQry[] = "select * from ventas2 where id=$id_ventas for update;";
 	$aQry[] = "update ventas2 set clientes_id=$clientes_id,fecha='$fecha' where id=$id_ventas";
 	$aQry[] = "select * from detventas2 where ventas_id=$id_ventas for update;";
@@ -83,18 +84,19 @@ if($accion=="cambiar" || $accion=="agregar"){
 			$productos_id = isset($_POST['productos_id_'.$NumRen]) ? trim($_POST['productos_id_'.$NumRen]) : '0';
 			$cantidad = isset($_POST['cantidad_'.$NumRen]) ? trim($_POST['cantidad_'.$NumRen]) : '0';
 			$precio = isset($_POST['precio_'.$NumRen]) ? trim($_POST['precio_'.$NumRen]) : '0';
-			if(strlen($NumRen)>0 && strlen($id_ventas)>0 && strlen($productos_id)>0 && strlen($cantidad)>0 && strlen($precio)>0){
-				$aQry[] = "insert into detventas2 (ren,ventas_id,productos_id,cantidad,precio) values ($NumRen,$id_ventas,$productos_id,$cantidad,$precio);";
+			$descuento = isset($_POST['descuento_'.$NumRen]) ? trim($_POST['descuento_'.$NumRen]) : '0';
+			if(strlen($NumRen)>0 && strlen($id_ventas)>0 && strlen($productos_id)>0 && strlen($cantidad)>0 && strlen($precio)>0 && strlen($descuento)>0){
+				$aQry[] = "insert into detventas2 (ren,ventas_id,productos_id,cantidad,precio,descuento) values ($NumRen,$id_ventas,$productos_id,$cantidad,$precio,$descuento);";
 			}
 		};
 	}
-	$aQry[] = "select sum(cantidad) as sumcantidad,sum(cantidad*precio) as sumimporte from detventas2 v where  v.ventas_id=$id_ventas limit 1;";
+	$aQry[] = "select sum(cantidad) as sumcantidad,sum((cantidad*precio)-(cantidad*precio*(descuento/100))) as sumimporte from detventas2 v where  v.ventas_id=$id_ventas limit 1;";
 
 	$accion="consultar";
 	$cadaux1 = "Totales";
 
 }
-if($accion=="eliminar"){
+if($accion=="eliminar" && $status == '0'){
 	$aQry[] = "select * from detventas2 where ventas_id=$id_ventas for update;";
 	$aQry[] = "delete from detventas2 where ventas_id=$id_ventas;";
 	$aQry[] = "select * from ventas2 where id=$id_ventas for update;";

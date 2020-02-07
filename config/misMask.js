@@ -82,6 +82,22 @@ Inputmask.extendAliases({
  }
 });
 
+
+Inputmask.extendAliases({
+  'maskDescuento': {
+	alias: "numeric",
+    mask: "99.99",
+	numericInput: true,
+	rightAlign: true,
+	autoUnmask: true,
+	placeholder: "",
+	digits: 2,
+	digitsOptional: false,
+	positionCaretOnClick: "select"
+ }
+});
+
+
 function aplicaMask(){
 	$(".maskFecha").inputmask("maskFecha",
 		{
@@ -96,6 +112,7 @@ function aplicaMask(){
 	$(".maskDecimal2").inputmask("maskDecimal2");
 	$(".maskMoneda").inputmask("maskMoneda");
 	$(".maskMoneda2").inputmask("maskMoneda2");
+	$(".maskDescuento").inputmask("maskDescuento");
 };
 
 aplicaMask();
