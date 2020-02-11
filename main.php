@@ -258,6 +258,11 @@ echo $cuerpo_tabs;
 <div id="mensajes"></div>
 </div>
 
+<div id="dlgPDF" title="">
+
+</div>
+
+
 <?php
 
 $dir_modulos_js = $config_apps['dir_modulos_js'];
@@ -316,6 +321,8 @@ foreach($modulos_php as $modulo){
     <button onClick="menu('aba')"><i class="fa fa-arrow-up"></i></button>
     <button onClick="menu('der')"><i class="fa fa-arrow-left"></i></button>
     <button onClick="menu('izq')"><i class="fa fa-arrow-right"></i></button>
+	<br><br><br>
+
 </nav>
 <nav id="menuaba" class="ui-widget ui-widget-content ui-corner-all"> 
 	<button onClick="menu('aba');"><i class="fa fa-times"></i></button>
@@ -324,6 +331,21 @@ foreach($modulos_php as $modulo){
     <button onClick="menu('izq')"><i class="fa fa-arrow-right"></i></button>
 	<br>
 	<br>
+
+	<!--seguridad-ventas2-reporte_pdf_productos--><button id="bs_rpdf_productos" class="" onclick="reporte_pdf_productos(this)"><i class="fas fa-print">&nbsp; Clientes</i></button><!--/seguridad-->
+	<br><br><br>
+
+
+<div id="exportar_pdf" style='width:100%; height:80%;' >	
+	<form id="frmpdf" name="frmpdf" target="ifpdf" action="core/rep_pdf.php" method="post">
+	<input type="hidden" name="cadpdf" id="cadpdf" value=""/>
+	</form>
+ <!-- div style="float:left; width:500px; font-size:20px; margin-left:50px;">Reporte PDF</div -->
+ <iframe name="ifpdf" id="ifpdf" src="blank.html" allowtransparency="yes" frameborder="0"  width="100%"  height="100%"></iframe>
+ </div>
+	
+	
+	
 </nav>
 
 <?php

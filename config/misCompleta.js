@@ -652,9 +652,10 @@ function imprimirNotaVenta(objBtn){
 			},
 			success: function( xml ) {
 				if($(xml).find("estatus").text()=="S"){
-					alert('impresion de la nota...');
+					//alert('impresion de la nota...');
 					$('#dlg_status_ventas2').val($(xml).find("status").text());
 					bloqueoCapturaNotaCerrada(xml);
+					dlgtestPDF();
 				}else{
 					alert($(xml).find("mensaje").text());
 				};
@@ -669,6 +670,44 @@ function imprimirNotaVenta(objBtn){
 		functionOk();
 	};
 };
+
+
+function reporte_pdf_productos(obj){
+	$('#frmpdf').attr('action','reportes/reporte_pdf_clientes.php');
+	$('#frmpdf').submit();
+}
+
+function dlgtestPDF(){
+	var fileName  = 'reporte_pdf_clientes.php?fechai=2020-02-11&fechaf=2020-03-25';
+           $("#dlgPDF").dialog({
+                modal: true,
+                title: "nota venta",
+                width: 1200,
+                height: 800,
+				buttons : [
+					   {
+						  text: "Cancelar",
+						  class : "btnCancel",
+						  icons: { primary: "ui-icon-close" },
+						  click: function() {
+							$( this ).dialog( "close" );
+						  }
+					 
+						}				
+				],
+                open: function () {
+					$(this).closest(".ui-dialog").find(".btnCancel").html('<i class="fa fa-times"></i>');
+					
+                    var object = "<object data=\"{FileName}\" type=\"application/pdf\" width=\"100%\" height=\"100%\">";
+                    object += "If you are unable to view file, you can download from <a href = \"{FileName}\">here</a>";
+                    object += " or download <a target = \"_blank\" href = \"http://get.adobe.com/reader/\">Adobe PDF Reader</a> to view the file.";
+                    object += "</object>";
+                    object = object.replace(/{FileName}/g, "/simple/reportes/" + fileName);
+                    $("#dlgPDF").html(object);
+                }
+            });
+	
+}
 
 
 aplicaCompleta();
